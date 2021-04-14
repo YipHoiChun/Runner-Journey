@@ -16,14 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickRecord(View v) {
         // go to the record journey activity
-        Intent journey = new Intent(MainActivity.this, RecordActivity.class);
-        startActivity(journey);
+        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+        startActivity(intent);
     }
 
     public void onClickView(View v) {
         // go to the activity for displaying journeys
-        Intent view = new Intent(MainActivity.this, JourneysActivity.class);
-        startActivity(view);
+        Intent intent = new Intent(MainActivity.this, JourneysActivity.class);
+        startActivity(intent);
     }
 
 
