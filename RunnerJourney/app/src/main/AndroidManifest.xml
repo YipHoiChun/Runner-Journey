@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.runnerjourney">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnerJourney">
-        <activity android:name=".JourneysActivity"></activity>
+        <activity android:name=".EditActivity"></activity>
+
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <provider
+            android:name=".JourneyProvider"
+            android:authorities="com.example.runnerjourney.JourneyProvider"
+            android:exported="true" />
+
+        <activity android:name=".MapActivity" />
+        <activity android:name=".JourneysActivity" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
