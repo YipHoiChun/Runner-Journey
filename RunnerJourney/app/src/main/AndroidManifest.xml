@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnerJourney">
-        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".SingleJourneyActivity"></activity>
+        <activity android:name=".EditActivity" />
 
         <receiver
             android:name=".MyReceiver"
