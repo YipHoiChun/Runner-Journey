@@ -28,7 +28,7 @@
             android:id="@+id/journeyList_journeyImg"
             android:layout_width="160dp"
             android:layout_height="120dp"
-            app:srcCompat="@drawable/runner" />
+            app:srcCompat="@drawable/running" />
 
     </RelativeLayout>
 

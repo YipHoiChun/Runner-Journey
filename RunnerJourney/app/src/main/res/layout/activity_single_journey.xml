@@ -23,7 +23,7 @@
             android:id="@+id/ViewSingleJourney_journeyImg"
             android:layout_width="match_parent"
             android:layout_height="171dp"
-            app:srcCompat="@drawable/runner" />
+            app:srcCompat="@drawable/running" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

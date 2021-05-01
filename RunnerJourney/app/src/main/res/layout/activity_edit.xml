@@ -67,7 +67,7 @@
         android:id="@+id/journeyImg"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        app:srcCompat="@drawable/runner" />
+        app:srcCompat="@drawable/running" />
 
     <Button
         android:id="@+id/button4"

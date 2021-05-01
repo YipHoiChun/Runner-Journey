@@ -71,7 +71,7 @@ public class JourneysActivity extends ListActivity {
                         }
                     }
                     else {
-                        img.setImageDrawable(getResources().getDrawable(R.drawable.runner));
+                        img.setImageDrawable(getResources().getDrawable(R.drawable.running));
                     }
                 }
             }
