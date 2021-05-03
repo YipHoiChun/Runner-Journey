@@ -34,7 +34,6 @@ public class RecordActivity extends AppCompatActivity {
     private Button stopButton;
     private static final int PERMISSION_GPS_CODE = 1;
 
-    // will poll the location service for distance and duration
     private Handler postBack = new Handler();
 
     private ServiceConnection lsc = new ServiceConnection() {
@@ -42,14 +41,12 @@ public class RecordActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationService = (LocationService.LocationServiceBinder) iBinder;
 
-            // if currently tracking then enable stopButton and disable startButton
             initButtons();
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (locationService != null) {
-                        // get the distance and duration from the surface
                         float d = (float) locationService.getDuration();
                         long duration = (long) d;  // in seconds
                         float distance = locationService.getDistance();
@@ -70,7 +67,6 @@ public class RecordActivity extends AppCompatActivity {
                         postBack.post(new Runnable() {
                             @Override
                             public void run() {
-                                // post back changes to UI thread
                                 durationText.setText(time);
                                 avgSpeedText.setText(avgs);
                                 distanceText.setText(dist);
@@ -93,20 +89,16 @@ public class RecordActivity extends AppCompatActivity {
         }
     };
 
-    // whenever activity is reloaded while still tracking a journey (if back button is clicked for example)
     private void initButtons() {
-        // no permissions means no buttons
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             stopButton.setEnabled(false);
             playButton.setEnabled(false);
             return;
         }
 
-        // if currently tracking then enable stopButton and disable startButton
         if(locationService != null && locationService.currentlyTracking()) {
             stopButton.setEnabled(true);
             playButton.setEnabled(false);
-//            gif.play();
         } else {
             stopButton.setEnabled(false);
             playButton.setEnabled(true);
@@ -124,11 +116,9 @@ public class RecordActivity extends AppCompatActivity {
         playButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
 
-        // connect to service to see if currently tracking before enabling a button
         stopButton.setEnabled(false);
         playButton.setEnabled(false);
 
-        // register broadcast receiver to receive low battery broadcasts
         try {
             MyReceiver receiver = new MyReceiver();
             registerReceiver(receiver, new IntentFilter(
@@ -139,29 +129,22 @@ public class RecordActivity extends AppCompatActivity {
 
         handlePermissions();
 
-        // start the service so that it persists outside of the lifetime of this activity
-        // and also bind to it to gain control over the service
         startService(new Intent(this, LocationService.class));
         bindService(
                 new Intent(this, LocationService.class), lsc, Context.BIND_AUTO_CREATE);
     }
     public void onClickPlay(View view) {
-//        gif.play();
-        // start the timer and tracking GPS locations
         locationService.playJourney();
         playButton.setEnabled(false);
         stopButton.setEnabled(true);
     }
 
     public void onClickStop(View view) {
-        // save the current journey to the database
         float distance = locationService.getDistance();
         locationService.saveJourney();
 
         playButton.setEnabled(false);
         stopButton.setEnabled(false);
-
-//        gif.pause();
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
         modal.show(getSupportFragmentManager(), "Finished");
@@ -171,14 +154,12 @@ public class RecordActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
 
-        // un-register this receiver since we only need it while recording GPS
         try {
             MyReceiver receiver = new MyReceiver();
             unregisterReceiver(receiver);
         } catch(IllegalArgumentException  e) {
         }
 
-        // unbind to the service (if we are the only binding activity then the service will be destroyed)
         if(lsc != null) {
             unbindService(lsc);
             lsc = null;
@@ -201,11 +182,9 @@ public class RecordActivity extends AppCompatActivity {
             builder.setMessage("Your Journey has been saved. You ran a total of " + getArguments().getString("distance") + " KM")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // go back to home screen
                             getActivity().finish();
                         }
                     });
-            // Create the AlertDialog object and return it
             return builder.create();
         }
     }
@@ -218,13 +197,11 @@ public class RecordActivity extends AppCompatActivity {
         switch(reqCode) {
             case PERMISSION_GPS_CODE:
                 if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission granted
                     initButtons();
                     if(locationService != null) {
                         locationService.notifyGPSEnabled();
                     }
                 } else {
-                    // permission denied, disable GPS tracking buttons
                     stopButton.setEnabled(false);
                     playButton.setEnabled(false);
                 }
@@ -247,32 +224,24 @@ public class RecordActivity extends AppCompatActivity {
             builder.setMessage("GPS is required to track your journey!")
                     .setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // user agreed to enable GPS
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GPS_CODE);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // dialogue was cancelled
                         }
                     });
-            // Create the AlertDialog object and return it
             return builder.create();
         }
     }
 
     private void handlePermissions() {
-        // if don't have GPS permissions then request this permission from the user.
-        // if not granted the permission disable the start button
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // the user has already declined request to allow GPS
-                // give them a pop up explaining why its needed and re-ask
                 DialogFragment modal = NoPermissionDialogue.newInstance();
                 modal.show(getSupportFragmentManager(), "Permissions");
             } else {
-                // request the permission
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GPS_CODE);
             }
 

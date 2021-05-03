@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickCamera(View v) {
-        // go to the activity for displaying journeys
+        // go to the activity for Camera
         Intent intent = new Intent(MainActivity.this, CameraActivity.class);
         startActivity(intent);
     }
