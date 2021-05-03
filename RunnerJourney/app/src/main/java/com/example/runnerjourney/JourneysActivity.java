@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class JourneysActivity extends ListActivity {
-    private TextView dateText;
+    private TextView textView;
     private DatePickerDialog.OnDateSetListener dateListener;
 
     private ListView journeyList;
@@ -45,16 +45,16 @@ public class JourneysActivity extends ListActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v = convertView;
-            if (v == null) {
+            View view = convertView;
+            if (view == null) {
                 LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.journey_list, null);
+                view = vi.inflate(R.layout.journey_list, null);
             }
 
             JourneyItem item = items.get(position);
             if (item != null) {
-                TextView text = v.findViewById(R.id.singleJourney);
-                ImageView img = v.findViewById(R.id.journeyList_journeyImg);
+                TextView text = view.findViewById(R.id.singleJourney);
+                ImageView img = view.findViewById(R.id.journeyList_journeyImg);
                 if (text != null) {
                     text.setText(item.getName());
                 }
@@ -75,7 +75,7 @@ public class JourneysActivity extends ListActivity {
                     }
                 }
             }
-            return v;
+            return view;
         }
     }
 
@@ -108,41 +108,40 @@ public class JourneysActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        // update the view in-case title or image was changed
-        String date = dateText.getText().toString();
+        String date = textView.getText().toString();
         if(!date.toLowerCase().equals("select date")) {
             listJourneys(date);
         }
     }
 
     private void setUpDateDialogue() {
-        dateText = findViewById(R.id.selectDateText);
+        textView = findViewById(R.id.selectDateText);
         journeyList = getListView();
 
-        dateText.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int yyyy;
-                int mm;
-                int dd;
+                int year;
+                int month;
+                int day;
 
-                if(dateText.getText().toString().toLowerCase().equals("select date")) {
+                if(textView.getText().toString().toLowerCase().equals("select date")) {
                     Calendar calender = Calendar.getInstance();
-                    yyyy = calender.get(Calendar.YEAR);
-                    mm = calender.get(Calendar.MONTH);
-                    dd = calender.get(Calendar.DAY_OF_MONTH);
+                    year = calender.get(Calendar.YEAR);
+                    month = calender.get(Calendar.MONTH);
+                    day = calender.get(Calendar.DAY_OF_MONTH);
                 } else {
-                    String[] dateParts = dateText.getText().toString().split("/");
-                    yyyy = Integer.parseInt(dateParts[2]);
-                    mm = Integer.parseInt(dateParts[1]) - 1;
-                    dd = Integer.parseInt(dateParts[0]);
+                    String[] dateParts = textView.getText().toString().split("/");
+                    year = Integer.parseInt(dateParts[2]);
+                    month = Integer.parseInt(dateParts[1]) - 1;
+                    day = Integer.parseInt(dateParts[0]);
                 }
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         JourneysActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateListener,
-                        yyyy, mm, dd);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -150,21 +149,21 @@ public class JourneysActivity extends ListActivity {
 
         dateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int yyyy, int mm, int dd) {
-                mm = mm + 1;
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
                 String date;
 
-                if(mm < 10) {
-                    date = dd + "/0" + mm + "/" + yyyy;
+                if(month < 10) {
+                    date = day + "/0" + month + "/" + year;
                 } else {
-                    date = dd + "/" + mm + "/" + yyyy;
+                    date = day + "/" + month + "/" + year;
                 }
 
-                if(dd < 10) {
+                if(day < 10) {
                     date = "0" + date;
                 }
 
-                dateText.setText(date);
+                textView.setText(date);
 
                 listJourneys(date);
             }
@@ -188,11 +187,11 @@ public class JourneysActivity extends ListActivity {
         adapter.notifyDataSetChanged();
         try {
             while(c.moveToNext()) {
-                JourneyItem i = new JourneyItem();
-                i.setName(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
-                i.setStrUri(c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE)));
-                i.set_id(c.getLong(c.getColumnIndex("_id")));
-                journeyNames.add(i);
+                JourneyItem item = new JourneyItem();
+                item.setName(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
+                item.setStrUri(c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE)));
+                item.set_id(c.getLong(c.getColumnIndex("_id")));
+                journeyNames.add(item);
             }
         } finally {
             if(journeyNames != null && journeyNames.size() > 0) {

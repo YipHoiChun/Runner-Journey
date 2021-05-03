@@ -39,17 +39,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 null, JourneyProviderContract.L_JID + " = " + journeyID, null, null);
 
         PolylineOptions line = new PolylineOptions().clickable(false);
-        LatLng firstLoc = null;
-        LatLng lastLoc = null;
+        LatLng firstLocation = null;
+        LatLng lastLocation = null;
         try {
             while(c.moveToNext()) {
                 LatLng loc = new LatLng(c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LATITUDE)),
                         c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LONGITUDE)));
                 if(c.isFirst()) {
-                    firstLoc = loc;
+                    firstLocation = loc;
                 }
                 if(c.isLast()) {
-                    lastLoc = loc;
+                    lastLocation = loc;
                 }
                 line.add(loc);
             }
@@ -58,10 +58,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         float zoom = 15.0f;
-        if(lastLoc != null && firstLoc != null) {
-            myMap.addMarker(new MarkerOptions().position(firstLoc).title("Start"));
-            myMap.addMarker(new MarkerOptions().position(lastLoc).title("End"));
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLoc, zoom));
+        if(lastLocation != null && firstLocation != null) {
+            myMap.addMarker(new MarkerOptions().position(firstLocation).title("Start"));
+            myMap.addMarker(new MarkerOptions().position(lastLocation).title("End"));
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, zoom));
         }
         myMap.addPolyline(line);
     }

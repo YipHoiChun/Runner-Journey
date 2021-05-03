@@ -48,7 +48,7 @@ public class RecordActivity extends AppCompatActivity {
                 public void run() {
                     while (locationService != null) {
                         float d = (float) locationService.getDuration();
-                        long duration = (long) d;  // in seconds
+                        long duration = (long) d;
                         float distance = locationService.getDistance();
 
                         long hours = duration / 3600;
@@ -62,13 +62,13 @@ public class RecordActivity extends AppCompatActivity {
 
                         final String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
                         final String dist = String.format("%.2f KM", distance);
-                        final String avgs = String.format("%.2f KM/H", avgSpeed);
+                        final String avg_speed = String.format("%.2f KM/H", avgSpeed);
 
                         postBack.post(new Runnable() {
                             @Override
                             public void run() {
                                 durationText.setText(time);
-                                avgSpeedText.setText(avgs);
+                                avgSpeedText.setText(avg_speed);
                                 distanceText.setText(dist);
                             }
                         });
