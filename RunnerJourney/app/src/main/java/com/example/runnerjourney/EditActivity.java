@@ -22,10 +22,10 @@ import java.io.InputStream;
 public class EditActivity extends AppCompatActivity {
     private final int RESULT_LOAD_IMG = 1;
 
-    private ImageView journeyImg;
-    private EditText titleET;
-    private EditText commentET;
-    private EditText ratingET;
+    private ImageView journeyImge;
+    private EditText titleEditText;
+    private EditText commentEditText;
+    private EditText ratingEditText;
     private long journeyID;
 
     private Uri selectedJourneyImg;
@@ -36,10 +36,10 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         Bundle bundle = getIntent().getExtras();
 
-        journeyImg = findViewById(R.id.journeyImg);
-        titleET = findViewById(R.id.titleEditText);
-        commentET = findViewById(R.id.commentEditText);
-        ratingET = findViewById(R.id.ratingEditText);
+        journeyImge = findViewById(R.id.journeyImg);
+        titleEditText = findViewById(R.id.titleEditText);
+        commentEditText = findViewById(R.id.commentEditText);
+        ratingEditText = findViewById(R.id.ratingEditText);
         journeyID = bundle.getLong("journeyID");
 
         selectedJourneyImg = null;
@@ -48,17 +48,17 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickSave(View v) {
-        int rating = checkRating(ratingET);
+        int rating = checkRating(ratingEditText);
         if(rating == -1) {
             return;
         }
 
-        Uri rowQueryUri = Uri.withAppendedPath(JourneyProviderContract.JOURNEY_URI, "" + journeyID);
+        Uri rowQueryUri = Uri.withAppendedPath(JourneyProviderContract.J_URI, "" + journeyID);
 
         ContentValues cv = new ContentValues();
         cv.put(JourneyProviderContract.J_RATING, rating);
-        cv.put(JourneyProviderContract.J_COMMENT, commentET.getText().toString());
-        cv.put(JourneyProviderContract.J_NAME, titleET.getText().toString());
+        cv.put(JourneyProviderContract.J_COMMENT, commentEditText.getText().toString());
+        cv.put(JourneyProviderContract.J_NAME, titleEditText.getText().toString());
 
         if(selectedJourneyImg != null) {
             cv.put(JourneyProviderContract.J_IMAGE, selectedJourneyImg.toString());
@@ -88,7 +88,7 @@ public class EditActivity extends AppCompatActivity {
 
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        journeyImg.setImageBitmap(selectedImage);
+                        journeyImge.setImageBitmap(selectedImage);
                         selectedJourneyImg = imageUri;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -102,13 +102,13 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void populateEditText() {
-        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.JOURNEY_URI,
+        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
         if(c.moveToFirst()) {
-            titleET.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
-            commentET.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_COMMENT)));
-            ratingET.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_RATING)));
+            titleEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
+            commentEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_COMMENT)));
+            ratingEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_RATING)));
 
             String strUri = c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE));
             if(strUri != null) {
@@ -116,7 +116,7 @@ public class EditActivity extends AppCompatActivity {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    journeyImg.setImageBitmap(selectedImage);
+                    journeyImge.setImageBitmap(selectedImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

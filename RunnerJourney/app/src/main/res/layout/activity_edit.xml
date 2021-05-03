@@ -11,7 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Journey Details"
+        android:text="Edit Details"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:gravity="center"/>
 
@@ -21,14 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Rename Title" />
+        android:text="Title" />
 
     <EditText
         android:id="@+id/titleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Recorded Journey"
+        android:hint="Journey"
         android:inputType="textPersonName" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="What an amazing journey!"
+        android:hint="XXX!"
         android:inputType="textPersonName" />
 
     <TextView
@@ -84,6 +84,6 @@
         android:layout_margin="12dp"
         android:onClick="onClickSave"
         android:padding="8dp"
-        android:text="SAVE JOURNEY" />
+        android:text="SAVE" />
 
 </LinearLayout>

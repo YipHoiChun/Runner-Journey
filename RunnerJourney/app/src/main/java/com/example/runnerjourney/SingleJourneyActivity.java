@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class SingleJourneyActivity extends AppCompatActivity {
     private ImageView journeyImg;
     private TextView distanceTV;
-    private TextView avgSpeedTV;
+    private TextView avgTV;
     private TextView timeTV;
     private TextView dateTV;
     private TextView ratingTV;
@@ -55,7 +55,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
 
         journeyImg = findViewById(R.id.ViewSingleJourney_journeyImg);
         distanceTV = findViewById(R.id.Statistics_recordDistance);
-        avgSpeedTV = findViewById(R.id.Statistics_distanceToday);
+        avgTV = findViewById(R.id.Statistics_distanceToday);
         timeTV     = findViewById(R.id.Statistics_timeToday);
         dateTV     = findViewById(R.id.ViewSingleJourney_dateText);
         ratingTV   = findViewById(R.id.ViewSingleJourney_ratingText);
@@ -85,7 +85,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
     }
 
     private void populateView() {
-        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.JOURNEY_URI,
+        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
         if(c.moveToFirst()) {
@@ -102,7 +102,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
             long seconds = time % 60;
 
             distanceTV.setText(String.format("%.2f KM", distance));
-            avgSpeedTV.setText(String.format("%.2f KM/H", avgSpeed));
+            avgTV.setText(String.format("%.2f KM/H", avgSpeed));
             timeTV.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
             String date = c.getString(c.getColumnIndex(JourneyProviderContract.J_DATE));

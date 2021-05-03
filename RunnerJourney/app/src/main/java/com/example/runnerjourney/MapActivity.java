@@ -35,7 +35,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
 
-        Cursor c = getContentResolver().query(JourneyProviderContract.LOCATION_URI,
+        Cursor c = getContentResolver().query(JourneyProviderContract.L_URI,
                 null, JourneyProviderContract.L_JID + " = " + journeyID, null, null);
 
         PolylineOptions line = new PolylineOptions().clickable(false);

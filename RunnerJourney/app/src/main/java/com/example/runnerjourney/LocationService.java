@@ -16,7 +16,6 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.text.SimpleDateFormat;
@@ -144,21 +143,21 @@ public class LocationService extends Service {
     }
 
     protected void saveJourney() {
-        ContentValues journeyData = new ContentValues();
-        journeyData.put(JourneyProviderContract.J_distance, getDistance());
-        journeyData.put(JourneyProviderContract.J_DURATION, (long) getDuration());
-        journeyData.put(JourneyProviderContract.J_DATE, getDateTime());
+        ContentValues jData = new ContentValues();
+        jData.put(JourneyProviderContract.J_distance, getDistance());
+        jData.put(JourneyProviderContract.J_DURATION, (long) getDuration());
+        jData.put(JourneyProviderContract.J_DATE, getDateTime());
 
-        long journeyID = Long.parseLong(getContentResolver().insert(JourneyProviderContract.JOURNEY_URI, journeyData).getLastPathSegment());
+        long journeyID = Long.parseLong(getContentResolver().insert(JourneyProviderContract.J_URI, jData).getLastPathSegment());
 
         for (Location location : locationListener.getLocations()) {
-            ContentValues locationData = new ContentValues();
-            locationData.put(JourneyProviderContract.L_JID, journeyID);
-            locationData.put(JourneyProviderContract.L_ALTITUDE, location.getAltitude());
-            locationData.put(JourneyProviderContract.L_LATITUDE, location.getLatitude());
-            locationData.put(JourneyProviderContract.L_LONGITUDE, location.getLongitude());
+            ContentValues lData = new ContentValues();
+            lData.put(JourneyProviderContract.L_JID, journeyID);
+            lData.put(JourneyProviderContract.L_ALTITUDE, location.getAltitude());
+            lData.put(JourneyProviderContract.L_LATITUDE, location.getLatitude());
+            lData.put(JourneyProviderContract.L_LONGITUDE, location.getLongitude());
 
-            getContentResolver().insert(JourneyProviderContract.LOCATION_URI, locationData);
+            getContentResolver().insert(JourneyProviderContract.L_URI, lData);
         }
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

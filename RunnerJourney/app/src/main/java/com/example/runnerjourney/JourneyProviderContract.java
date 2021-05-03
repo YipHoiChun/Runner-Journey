@@ -6,8 +6,8 @@ public class JourneyProviderContract {
     public static final String AUTHORITY = "com.example.runnerjourney.JourneyProvider";
 
     public static final Uri ALL_URI = Uri.parse("content://"+AUTHORITY+"");
-    public static final Uri JOURNEY_URI = Uri.parse("content://"+AUTHORITY+"/journey");
-    public static final Uri LOCATION_URI = Uri.parse("content://"+AUTHORITY+"/location");
+    public static final Uri J_URI = Uri.parse("content://"+AUTHORITY+"/journey");
+    public static final Uri L_URI = Uri.parse("content://"+AUTHORITY+"/location");
 
     public static final String J_ID = "journeyID";
     public static final String J_DURATION = "duration";

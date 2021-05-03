@@ -177,7 +177,7 @@ public class JourneysActivity extends ListActivity {
 
         Log.d("mdp", "Searching for date " + date);
 
-        Cursor c = getContentResolver().query(JourneyProviderContract.JOURNEY_URI,
+        Cursor c = getContentResolver().query(JourneyProviderContract.J_URI,
                 new String[] {JourneyProviderContract.J_ID + " _id", JourneyProviderContract.J_NAME, JourneyProviderContract.J_IMAGE}, JourneyProviderContract.J_DATE + " = ?", new String[] {date}, JourneyProviderContract.J_NAME + " ASC");
 
         Log.d("mdp", "Journeys Loaded: " + c.getCount());
