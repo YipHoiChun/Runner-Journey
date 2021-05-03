@@ -57,8 +57,8 @@ public class LocationService extends Service {
         super.onStartCommand(intent, flags, startId);
 
         if (intent != null) {
-            Bundle b = intent.getExtras();
-            if (b != null && b.getBoolean("battery")) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null && bundle.getBoolean("battery")) {
                 changeGPSRequestFrequency(TIME_INTERVAL * 3, DIST_INTERVAL * 3);
             }
         }

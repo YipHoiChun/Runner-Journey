@@ -28,7 +28,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
 
     private long journeyID;
 
-    private Handler h = new Handler();
+    private Handler handler = new Handler();
 
     protected class MyObserver extends ContentObserver {
 
@@ -65,32 +65,32 @@ public class SingleJourneyActivity extends AppCompatActivity {
 
         populateView();
         getContentResolver().registerContentObserver(
-                JourneyProviderContract.ALL_URI, true, new MyObserver(h));
+                JourneyProviderContract.ALL_URI, true, new MyObserver(handler));
     }
 
     public void onClickEdit(View v) {
         Intent editActivity = new Intent(SingleJourneyActivity.this, EditActivity.class);
-        Bundle b = new Bundle();
-        b.putLong("journeyID", journeyID);
-        editActivity.putExtras(b);
+        Bundle bundle = new Bundle();
+        bundle.putLong("journeyID", journeyID);
+        editActivity.putExtras(bundle);
         startActivity(editActivity);
     }
 
     public void onClickMap(View v) {
         Intent map = new Intent(SingleJourneyActivity.this, MapActivity.class);
-        Bundle b = new Bundle();
-        b.putLong("journeyID", journeyID);
-        map.putExtras(b);
+        Bundle bundle = new Bundle();
+        bundle.putLong("journeyID", journeyID);
+        map.putExtras(bundle);
         startActivity(map);
     }
 
     private void populateView() {
-        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
+        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
-        if(c.moveToFirst()) {
-            double distance = c.getDouble(c.getColumnIndex(JourneyProviderContract.J_distance));
-            long time       = c.getLong(c.getColumnIndex(JourneyProviderContract.J_DURATION));
+        if(cursor.moveToFirst()) {
+            double distance = cursor.getDouble(cursor.getColumnIndex(JourneyProviderContract.J_distance));
+            long time       = cursor.getLong(cursor.getColumnIndex(JourneyProviderContract.J_DURATION));
             double avgSpeed = 0;
 
             if(time != 0) {
@@ -105,24 +105,24 @@ public class SingleJourneyActivity extends AppCompatActivity {
             avgTV.setText(String.format("%.2f KM/H", avgSpeed));
             timeTV.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
-            String date = c.getString(c.getColumnIndex(JourneyProviderContract.J_DATE));
+            String date = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_DATE));
             String[] dateParts = date.split("-");
             date = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
 
             dateTV.setText(date);
-            ratingTV.setText(c.getInt(c.getColumnIndex(JourneyProviderContract.J_RATING)) + "");
-            commentTV.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_COMMENT)));
-            titleTV.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
+            ratingTV.setText(cursor.getInt(cursor.getColumnIndex(JourneyProviderContract.J_RATING)) + "");
+            commentTV.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_COMMENT)));
+            titleTV.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
 
-            String strUri = c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE));
+            String strUri = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE));
             if(strUri != null) {
                 try {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     journeyImg.setImageBitmap(selectedImage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         }
