@@ -35,10 +35,12 @@ public class SingleJourneyActivity extends AppCompatActivity {
         public MyObserver(Handler handler) {
             super(handler);
         }
+
         @Override
         public void onChange(boolean selfChange) {
             this.onChange(selfChange, null);
         }
+
         @Override
         public void onChange(boolean selfChange, Uri uri) {
 
@@ -56,12 +58,12 @@ public class SingleJourneyActivity extends AppCompatActivity {
         journeyImg = findViewById(R.id.ViewSingleJourney_journeyImg);
         distanceTV = findViewById(R.id.Statistics_recordDistance);
         avgTV = findViewById(R.id.Statistics_distanceToday);
-        timeTV     = findViewById(R.id.Statistics_timeToday);
-        dateTV     = findViewById(R.id.ViewSingleJourney_dateText);
-        ratingTV   = findViewById(R.id.ViewSingleJourney_ratingText);
-        commentTV  = findViewById(R.id.ViewSingleJourney_commentText);
-        titleTV    = findViewById(R.id.ViewSingleJourney_titleText);
-        journeyID  = bundle.getLong("journeyID");
+        timeTV = findViewById(R.id.Statistics_timeToday);
+        dateTV = findViewById(R.id.ViewSingleJourney_dateText);
+        ratingTV = findViewById(R.id.ViewSingleJourney_ratingText);
+        commentTV = findViewById(R.id.ViewSingleJourney_commentText);
+        titleTV = findViewById(R.id.ViewSingleJourney_titleText);
+        journeyID = bundle.getLong("journeyID");
 
         populateView();
         getContentResolver().registerContentObserver(
@@ -88,12 +90,12 @@ public class SingleJourneyActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             double distance = cursor.getDouble(cursor.getColumnIndex(JourneyProviderContract.J_distance));
-            long time       = cursor.getLong(cursor.getColumnIndex(JourneyProviderContract.J_DURATION));
+            long time = cursor.getLong(cursor.getColumnIndex(JourneyProviderContract.J_DURATION));
             double avgSpeed = 0;
 
-            if(time != 0) {
+            if (time != 0) {
                 avgSpeed = distance / (time / 3600.0);
             }
 
@@ -115,7 +117,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
             titleTV.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
 
             String strUri = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE));
-            if(strUri != null) {
+            if (strUri != null) {
                 try {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);

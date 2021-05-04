@@ -33,7 +33,7 @@ public class JourneysActivity extends ListActivity {
 
     private ListView journeyList;
     private JourneyAdapter adapter;
-    private ArrayList<JourneyItem> journeyNames;
+    private ArrayList<JourneyItem> itemArrayList;
 
     private class JourneyAdapter extends ArrayAdapter<JourneyItem> {
         private ArrayList<JourneyItem> items;
@@ -47,7 +47,7 @@ public class JourneysActivity extends ListActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = vi.inflate(R.layout.journey_list, null);
             }
 
@@ -58,9 +58,9 @@ public class JourneysActivity extends ListActivity {
                 if (text != null) {
                     text.setText(item.getName());
                 }
-                if(img != null) {
+                if (img != null) {
                     String strUri = item.getStrUri();
-                    if(strUri != null) {
+                    if (strUri != null) {
                         try {
                             final Uri imageUri = Uri.parse(strUri);
                             final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -69,8 +69,7 @@ public class JourneysActivity extends ListActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else {
+                    } else {
                         img.setImageDrawable(getResources().getDrawable(R.drawable.running));
                     }
                 }
@@ -84,8 +83,8 @@ public class JourneysActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journeys);
 
-        journeyNames = new ArrayList<JourneyItem>();
-        adapter = new JourneyAdapter(this, R.layout.journey_list, journeyNames);
+        itemArrayList = new ArrayList<JourneyItem>();
+        adapter = new JourneyAdapter(this, R.layout.journey_list, itemArrayList);
         setListAdapter(adapter);
         setUpDateDialogue();
 
@@ -109,7 +108,7 @@ public class JourneysActivity extends ListActivity {
     public void onResume() {
         super.onResume();
         String date = textView.getText().toString();
-        if(!date.toLowerCase().equals("select date")) {
+        if (!date.toLowerCase().equals("select date")) {
             listJourneys(date);
         }
     }
@@ -125,7 +124,7 @@ public class JourneysActivity extends ListActivity {
                 int month;
                 int day;
 
-                if(textView.getText().toString().toLowerCase().equals("select date")) {
+                if (textView.getText().toString().toLowerCase().equals("select date")) {
                     Calendar calender = Calendar.getInstance();
                     year = calender.get(Calendar.YEAR);
                     month = calender.get(Calendar.MONTH);
@@ -153,13 +152,13 @@ public class JourneysActivity extends ListActivity {
                 month = month + 1;
                 String date;
 
-                if(month < 10) {
+                if (month < 10) {
                     date = day + "/0" + month + "/" + year;
                 } else {
                     date = day + "/" + month + "/" + year;
                 }
 
-                if(day < 10) {
+                if (day < 10) {
                     date = "0" + date;
                 }
 
@@ -176,31 +175,31 @@ public class JourneysActivity extends ListActivity {
 
         Log.d("mdp", "Searching for date " + date);
 
-        Cursor c = getContentResolver().query(JourneyProviderContract.J_URI,
-                new String[] {JourneyProviderContract.J_ID + " _id", JourneyProviderContract.J_NAME, JourneyProviderContract.J_IMAGE}, JourneyProviderContract.J_DATE + " = ?", new String[] {date}, JourneyProviderContract.J_NAME + " ASC");
+        Cursor cursor = getContentResolver().query(JourneyProviderContract.J_URI,
+                new String[]{JourneyProviderContract.J_ID + " _id", JourneyProviderContract.J_NAME, JourneyProviderContract.J_IMAGE}, JourneyProviderContract.J_DATE + " = ?", new String[]{date}, JourneyProviderContract.J_NAME + " ASC");
 
-        Log.d("mdp", "Journeys Loaded: " + c.getCount());
+        Log.d("mdp", "Journeys Loaded: " + cursor.getCount());
 
-        journeyNames = new ArrayList<JourneyItem>();
+        itemArrayList = new ArrayList<JourneyItem>();
         adapter.notifyDataSetChanged();
         adapter.clear();
         adapter.notifyDataSetChanged();
         try {
-            while(c.moveToNext()) {
+            while (cursor.moveToNext()) {
                 JourneyItem item = new JourneyItem();
-                item.setName(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
-                item.setStrUri(c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE)));
-                item.set_id(c.getLong(c.getColumnIndex("_id")));
-                journeyNames.add(item);
+                item.setName(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
+                item.setStrUri(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE)));
+                item.set_id(cursor.getLong(cursor.getColumnIndex("_id")));
+                itemArrayList.add(item);
             }
         } finally {
-            if(journeyNames != null && journeyNames.size() > 0) {
+            if (itemArrayList != null && itemArrayList.size() > 0) {
                 adapter.notifyDataSetChanged();
-                for(int i = 0; i < journeyNames.size(); i++) {
-                    adapter.add(journeyNames.get(i));
+                for (int i = 0; i < itemArrayList.size(); i++) {
+                    adapter.add(itemArrayList.get(i));
                 }
             }
-            c.close();
+            cursor.close();
             adapter.notifyDataSetChanged();
         }
 

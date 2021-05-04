@@ -49,7 +49,7 @@ public class EditActivity extends AppCompatActivity {
 
     public void onClickSave(View v) {
         int rating = checkRating(ratingEditText);
-        if(rating == -1) {
+        if (rating == -1) {
             return;
         }
 
@@ -60,7 +60,7 @@ public class EditActivity extends AppCompatActivity {
         cv.put(JourneyProviderContract.J_COMMENT, commentEditText.getText().toString());
         cv.put(JourneyProviderContract.J_NAME, titleEditText.getText().toString());
 
-        if(selectedJourneyImg != null) {
+        if (selectedJourneyImg != null) {
             cv.put(JourneyProviderContract.J_IMAGE, selectedJourneyImg.toString());
         }
 
@@ -79,7 +79,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
 
-        switch(reqCode) {
+        switch (reqCode) {
             case RESULT_LOAD_IMG: {
                 if (resultCode == RESULT_OK) {
                     try {
@@ -94,8 +94,8 @@ public class EditActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }else {
-                    Toast.makeText(EditActivity.this, "You didn't pick an Image",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(EditActivity.this, "You didn't pick an Image", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -105,13 +105,13 @@ public class EditActivity extends AppCompatActivity {
         Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
-        if(c.moveToFirst()) {
+        if (c.moveToFirst()) {
             titleEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
             commentEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_COMMENT)));
             ratingEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_RATING)));
 
             String strUri = c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE));
-            if(strUri != null) {
+            if (strUri != null) {
                 try {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -128,12 +128,12 @@ public class EditActivity extends AppCompatActivity {
         int rating;
         try {
             rating = Integer.parseInt(newRating.getText().toString());
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.d("mdp", "The following is not a number: " + newRating.getText().toString());
             return -1;
         }
 
-        if(rating < 0 || rating > 5) {
+        if (rating < 0 || rating > 5) {
             Log.d("mdp", "Rating must be between 0-5");
             return -1;
         }

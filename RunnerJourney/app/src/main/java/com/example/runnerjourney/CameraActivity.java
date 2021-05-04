@@ -30,12 +30,13 @@ public class CameraActivity extends AppCompatActivity {
 
     private String filename;
     private TextView lbl_imgpath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         showImage = (ImageView) findViewById(R.id.imgpic);
-        lbl_imgpath = (TextView)findViewById(R.id.lblimgpath);
+        lbl_imgpath = (TextView) findViewById(R.id.lblimgpath);
     }
 
     public void prc_camera(View view) {
@@ -44,16 +45,16 @@ public class CameraActivity extends AppCompatActivity {
         filename = format.format(date);
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        File outputImage = new File(path,filename+".jpg");
+        File outputImage = new File(path, filename + ".jpg");
 
         try {
-            if(outputImage.exists()) {
+            if (outputImage.exists()) {
                 outputImage.delete();
             }
 
             outputImage.createNewFile();
 
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -61,7 +62,7 @@ public class CameraActivity extends AppCompatActivity {
 
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(intent,CROP_PHOTO);
+        startActivityForResult(intent, CROP_PHOTO);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
             return;
         }
 
-        switch(requestCode) {
+        switch (requestCode) {
             case CROP_PHOTO:
                 try {
                     Bitmap bitmap = BitmapFactory.decodeStream(
@@ -86,7 +87,7 @@ public class CameraActivity extends AppCompatActivity {
                     lbl_imgpath.setText(imageUri.toString());
                     showImage.setImageBitmap(bitmap);
 
-                } catch(FileNotFoundException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
 

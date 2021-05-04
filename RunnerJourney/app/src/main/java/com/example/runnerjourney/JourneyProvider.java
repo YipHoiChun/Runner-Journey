@@ -46,7 +46,7 @@ public class JourneyProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         String tableName;
-        switch(matcher.match(uri)) {
+        switch (matcher.match(uri)) {
             case 1:
                 tableName = "journey";
                 break;
@@ -68,7 +68,7 @@ public class JourneyProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[]
             selectionArgs, String sortOrder) {
 
-        switch(matcher.match(uri)) {
+        switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
@@ -88,7 +88,7 @@ public class JourneyProvider extends ContentProvider {
         String tableName;
         int count;
 
-        switch(matcher.match(uri)) {
+        switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
@@ -114,7 +114,7 @@ public class JourneyProvider extends ContentProvider {
         String tableName;
         int count;
 
-        switch(matcher.match(uri)) {
+        switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:

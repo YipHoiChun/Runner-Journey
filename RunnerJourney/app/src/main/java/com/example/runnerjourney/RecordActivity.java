@@ -56,7 +56,7 @@ public class RecordActivity extends AppCompatActivity {
                         long seconds = duration % 60;
 
                         float avgSpeed = 0;
-                        if(d != 0) {
+                        if (d != 0) {
                             avgSpeed = distance / (d / 3600);
                         }
 
@@ -90,13 +90,13 @@ public class RecordActivity extends AppCompatActivity {
     };
 
     private void initButtons() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             stopButton.setEnabled(false);
             playButton.setEnabled(false);
             return;
         }
 
-        if(locationService != null && locationService.currentlyTracking()) {
+        if (locationService != null && locationService.currentlyTracking()) {
             stopButton.setEnabled(true);
             playButton.setEnabled(false);
         } else {
@@ -123,7 +123,7 @@ public class RecordActivity extends AppCompatActivity {
             MyReceiver receiver = new MyReceiver();
             registerReceiver(receiver, new IntentFilter(
                     Intent.ACTION_BATTERY_LOW));
-        } catch(IllegalArgumentException  e) {
+        } catch (IllegalArgumentException e) {
         }
 
 
@@ -133,6 +133,7 @@ public class RecordActivity extends AppCompatActivity {
         bindService(
                 new Intent(this, LocationService.class), lsc, Context.BIND_AUTO_CREATE);
     }
+
     public void onClickPlay(View view) {
         locationService.playJourney();
         playButton.setEnabled(false);
@@ -157,17 +158,17 @@ public class RecordActivity extends AppCompatActivity {
         try {
             MyReceiver receiver = new MyReceiver();
             unregisterReceiver(receiver);
-        } catch(IllegalArgumentException  e) {
+        } catch (IllegalArgumentException e) {
         }
 
-        if(lsc != null) {
+        if (lsc != null) {
             unbindService(lsc);
             lsc = null;
         }
     }
 
     public static class FinishedTrackingDialogue extends DialogFragment {
-        public static  FinishedTrackingDialogue newInstance(String distance) {
+        public static FinishedTrackingDialogue newInstance(String distance) {
             Bundle savedInstanceState = new Bundle();
             savedInstanceState.putString("distance", distance);
             FinishedTrackingDialogue frag = new FinishedTrackingDialogue();
@@ -194,11 +195,11 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int reqCode, String[] permissions, int[] results) {
-        switch(reqCode) {
+        switch (reqCode) {
             case PERMISSION_GPS_CODE:
                 if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
                     initButtons();
-                    if(locationService != null) {
+                    if (locationService != null) {
                         locationService.notifyGPSEnabled();
                     }
                 } else {
@@ -212,7 +213,7 @@ public class RecordActivity extends AppCompatActivity {
 
 
     public static class NoPermissionDialogue extends DialogFragment {
-        public static  NoPermissionDialogue newInstance() {
+        public static NoPermissionDialogue newInstance() {
             NoPermissionDialogue frag = new NoPermissionDialogue();
             return frag;
         }
@@ -236,9 +237,9 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void handlePermissions() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 DialogFragment modal = NoPermissionDialogue.newInstance();
                 modal.show(getSupportFragmentManager(), "Permissions");
             } else {

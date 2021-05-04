@@ -37,7 +37,7 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("mdp", "Location Service created");
+        Log.d("mdp", "Location service has been created");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new MyLocationListener();
@@ -47,7 +47,7 @@ public class LocationService extends Service {
         try {
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TIME_INTERVAL, DIST_INTERVAL, locationListener);
         } catch (SecurityException e) {
-            Log.d("mdp", "No Permissions for GPS");
+            Log.d("mdp", "No GPS permission");
         }
 
     }
@@ -103,7 +103,7 @@ public class LocationService extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
 
-        Log.d("mdp", "Location Service destroyed");
+        Log.d("mdp", "Location service is broken");
     }
 
     @Override
@@ -177,7 +177,7 @@ public class LocationService extends Service {
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, time, dist, locationListener);
             Log.d("mdp", "New min time = " + time + ", min dist = " + dist);
         } catch (SecurityException e) {
-            Log.d("mdp", "No Permissions for GPS");
+            Log.d("mdp", "No GPS permission");
         }
     }
 
@@ -186,7 +186,7 @@ public class LocationService extends Service {
         try {
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3, 3, locationListener);
         } catch (SecurityException e) {
-            Log.d("mdp", "No Permissions for GPS");
+            Log.d("mdp", "No GPS permission");
         }
     }
 

@@ -42,13 +42,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng firstLocation = null;
         LatLng lastLocation = null;
         try {
-            while(c.moveToNext()) {
+            while (c.moveToNext()) {
                 LatLng loc = new LatLng(c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LATITUDE)),
                         c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LONGITUDE)));
-                if(c.isFirst()) {
+                if (c.isFirst()) {
                     firstLocation = loc;
                 }
-                if(c.isLast()) {
+                if (c.isLast()) {
                     lastLocation = loc;
                 }
                 line.add(loc);
@@ -58,15 +58,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         float zoom = 15.0f;
-        if(lastLocation != null && firstLocation != null) {
+        if (lastLocation != null && firstLocation != null) {
             myMap.addMarker(new MarkerOptions().position(firstLocation).title("Start"));
             myMap.addMarker(new MarkerOptions().position(lastLocation).title("End"));
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, zoom));
         }
         myMap.addPolyline(line);
     }
-
-
 
 
 }

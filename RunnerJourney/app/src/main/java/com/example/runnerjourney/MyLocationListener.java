@@ -21,7 +21,7 @@ public class MyLocationListener implements LocationListener {
     }
 
     public float getDistanceOfJourney() {
-        if(locations.size() <= 1) {
+        if (locations.size() <= 1) {
             return 0;
         }
 
@@ -36,18 +36,21 @@ public class MyLocationListener implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-        if(recordLocations) {
+        if (recordLocations) {
             locations.add(location);
         }
     }
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("mdp", "onStatusChanged: " + provider + " " + status);
     }
+
     @Override
     public void onProviderEnabled(String provider) {
         Log.d("mdp", "onProviderEnabled: " + provider);
     }
+
     @Override
     public void onProviderDisabled(String provider) {
         Log.d("mdp", "onProviderDisabled: " + provider);
