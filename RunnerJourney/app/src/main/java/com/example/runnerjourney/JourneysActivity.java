@@ -31,8 +31,8 @@ public class JourneysActivity extends ListActivity {
     private TextView textView;
     private DatePickerDialog.OnDateSetListener dateListener;
 
-    private ListView journeyList;
-    private JourneyAdapter adapter;
+    private ListView listView;
+    private JourneyAdapter journeyAdapter;
     private ArrayList<JourneyItem> itemArrayList;
 
     private class JourneyAdapter extends ArrayAdapter<JourneyItem> {
@@ -84,15 +84,15 @@ public class JourneysActivity extends ListActivity {
         setContentView(R.layout.activity_journeys);
 
         itemArrayList = new ArrayList<JourneyItem>();
-        adapter = new JourneyAdapter(this, R.layout.journey_list, itemArrayList);
-        setListAdapter(adapter);
+        journeyAdapter = new JourneyAdapter(this, R.layout.journey_list, itemArrayList);
+        setListAdapter(journeyAdapter);
         setUpDateDialogue();
 
-        journeyList.setClickable(true);
-        journeyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                JourneyItem o = (JourneyItem) journeyList.getItemAtPosition(position);
+                JourneyItem o = (JourneyItem) listView.getItemAtPosition(position);
                 long journeyID = o.get_id();
 
                 Bundle b = new Bundle();
@@ -115,7 +115,7 @@ public class JourneysActivity extends ListActivity {
 
     private void setUpDateDialogue() {
         textView = findViewById(R.id.selectDateText);
-        journeyList = getListView();
+        listView = getListView();
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,9 +181,9 @@ public class JourneysActivity extends ListActivity {
         Log.d("mdp", "Journeys Loaded: " + cursor.getCount());
 
         itemArrayList = new ArrayList<JourneyItem>();
-        adapter.notifyDataSetChanged();
-        adapter.clear();
-        adapter.notifyDataSetChanged();
+        journeyAdapter.notifyDataSetChanged();
+        journeyAdapter.clear();
+        journeyAdapter.notifyDataSetChanged();
         try {
             while (cursor.moveToNext()) {
                 JourneyItem item = new JourneyItem();
@@ -194,13 +194,13 @@ public class JourneysActivity extends ListActivity {
             }
         } finally {
             if (itemArrayList != null && itemArrayList.size() > 0) {
-                adapter.notifyDataSetChanged();
+                journeyAdapter.notifyDataSetChanged();
                 for (int i = 0; i < itemArrayList.size(); i++) {
-                    adapter.add(itemArrayList.get(i));
+                    journeyAdapter.add(itemArrayList.get(i));
                 }
             }
             cursor.close();
-            adapter.notifyDataSetChanged();
+            journeyAdapter.notifyDataSetChanged();
         }
 
     }

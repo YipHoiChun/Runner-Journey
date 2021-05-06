@@ -23,10 +23,10 @@ import java.util.Date;
 
 public class LocationService extends Service {
     private LocationManager locationManager;
-    private MyLocationListener locationListener;
+    private MyLocationListener myLocationListener;
     private final IBinder binder = new LocationServiceBinder();
 
-    private final String CHANNEL_ID = "100";
+    private final String CHANNEL_ID = "1000";
     private final int NOTIFICATION_ID = 001;
     private long startTime = 0;
     private long stopTime = 0;
@@ -40,12 +40,12 @@ public class LocationService extends Service {
         Log.d("mdp", "Location service has been created");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener();
-        locationListener.recordLocations = false;
+        myLocationListener = new MyLocationListener();
+        myLocationListener.recordLocations = false;
 
 
         try {
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TIME_INTERVAL, DIST_INTERVAL, locationListener);
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TIME_INTERVAL, DIST_INTERVAL, myLocationListener);
         } catch (SecurityException e) {
             Log.d("mdp", "No GPS permission");
         }
@@ -96,8 +96,8 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        locationManager.removeUpdates(locationListener);
-        locationListener = null;
+        locationManager.removeUpdates(myLocationListener);
+        myLocationListener = null;
         locationManager = null;
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -112,13 +112,13 @@ public class LocationService extends Service {
     }
 
     protected float getDistance() {
-        return locationListener.getDistanceOfJourney();
+        return myLocationListener.getDistanceOfJourney();
     }
 
     protected void playJourney() {
         addNotification();
-        locationListener.newJourney();
-        locationListener.recordLocations = true;
+        myLocationListener.newJourney();
+        myLocationListener.recordLocations = true;
         startTime = SystemClock.elapsedRealtime();
         stopTime = 0;
     }
@@ -150,7 +150,7 @@ public class LocationService extends Service {
 
         long journeyID = Long.parseLong(getContentResolver().insert(JourneyProviderContract.J_URI, jData).getLastPathSegment());
 
-        for (Location location : locationListener.getLocations()) {
+        for (Location location : myLocationListener.getLocations()) {
             ContentValues lData = new ContentValues();
             lData.put(JourneyProviderContract.L_JID, journeyID);
             lData.put(JourneyProviderContract.L_ALTITUDE, location.getAltitude());
@@ -163,18 +163,18 @@ public class LocationService extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
 
-        locationListener.recordLocations = false;
+        myLocationListener.recordLocations = false;
         stopTime = SystemClock.elapsedRealtime();
         startTime = 0;
-        locationListener.newJourney();
+        myLocationListener.newJourney();
 
         Log.d("mdp", "Journey saved with id = " + journeyID);
     }
 
     protected void changeGPSRequestFrequency(int time, int dist) {
         try {
-            locationManager.removeUpdates(locationListener);
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, time, dist, locationListener);
+            locationManager.removeUpdates(myLocationListener);
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, time, dist, myLocationListener);
             Log.d("mdp", "New min time = " + time + ", min dist = " + dist);
         } catch (SecurityException e) {
             Log.d("mdp", "No GPS permission");
@@ -184,7 +184,7 @@ public class LocationService extends Service {
 
     protected void notifyGPSEnabled() {
         try {
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3, 3, locationListener);
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3, 3, myLocationListener);
         } catch (SecurityException e) {
             Log.d("mdp", "No GPS permission");
         }

@@ -9,12 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 public class JourneyProvider extends ContentProvider {
-    DBHelper dbh;
-    SQLiteDatabase db;
+    DBHelper dbHelper;
+    SQLiteDatabase database;
 
     private static final UriMatcher matcher;
 
@@ -28,10 +25,10 @@ public class JourneyProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Log.d("mdp", "Journey Content Provider created");
-        dbh = new DBHelper(this.getContext());
-        db = dbh.getWritableDatabase();
-        return (db != null);
+        Log.d("mdp", "The journey content provider has been created");
+        dbHelper = new DBHelper(this.getContext());
+        database = dbHelper.getWritableDatabase();
+        return (database != null);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class JourneyProvider extends ContentProvider {
                 tableName = "";
         }
 
-        long _id = db.insert(tableName, null, values);
+        long _id = database.insert(tableName, null, values);
         Uri newRowUri = ContentUris.withAppendedId(uri, _id);
 
         getContext().getContentResolver().notifyChange(newRowUri, null);
@@ -72,11 +69,11 @@ public class JourneyProvider extends ContentProvider {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
-                return db.query("journey", projection, selection, selectionArgs, null, null, sortOrder);
+                return database.query("journey", projection, selection, selectionArgs, null, null, sortOrder);
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
-                return db.query("location", projection, selection, selectionArgs, null, null, sortOrder);
+                return database.query("location", projection, selection, selectionArgs, null, null, sortOrder);
             default:
                 return null;
         }
@@ -93,13 +90,13 @@ public class JourneyProvider extends ContentProvider {
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
                 tableName = "journey";
-                count = db.update(tableName, values, selection, selectionArgs);
+                count = database.update(tableName, values, selection, selectionArgs);
                 break;
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
                 tableName = "location";
-                count = db.update(tableName, values, selection, selectionArgs);
+                count = database.update(tableName, values, selection, selectionArgs);
                 break;
             default:
                 return 0;
@@ -119,13 +116,13 @@ public class JourneyProvider extends ContentProvider {
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
                 tableName = "journey";
-                count = db.delete(tableName, selection, selectionArgs);
+                count = database.delete(tableName, selection, selectionArgs);
                 break;
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
                 tableName = "location";
-                count = db.delete(tableName, selection, selectionArgs);
+                count = database.delete(tableName, selection, selectionArgs);
                 break;
             default:
                 return 0;

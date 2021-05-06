@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.io.InputStream;
 
 public class SingleJourneyActivity extends AppCompatActivity {
-    private ImageView journeyImg;
+    private ImageView imageView;
     private TextView distanceTV;
     private TextView avgTV;
     private TextView timeTV;
@@ -55,7 +55,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        journeyImg = findViewById(R.id.ViewSingleJourney_journeyImg);
+        imageView = findViewById(R.id.ViewSingleJourney_journeyImg);
         distanceTV = findViewById(R.id.Statistics_recordDistance);
         avgTV = findViewById(R.id.Statistics_distanceToday);
         timeTV = findViewById(R.id.Statistics_timeToday);
@@ -122,7 +122,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    journeyImg.setImageBitmap(selectedImage);
+                    imageView.setImageBitmap(selectedImage);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
