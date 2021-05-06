@@ -26,7 +26,7 @@ public class LocationService extends Service {
     private MyLocationListener myLocationListener;
     private final IBinder binder = new LocationServiceBinder();
 
-    private final String CHANNEL_ID = "1000";
+    private final String CHANNEL_ID = "123";
     private final int NOTIFICATION_ID = 001;
     private long startTime = 0;
     private long stopTime = 0;
@@ -37,7 +37,7 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("mdp", "Location service has been created");
+        Log.d("M", "Location service has been created");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         myLocationListener = new MyLocationListener();
@@ -47,10 +47,11 @@ public class LocationService extends Service {
         try {
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TIME_INTERVAL, DIST_INTERVAL, myLocationListener);
         } catch (SecurityException e) {
-            Log.d("mdp", "No GPS permission");
+            Log.d("M", "No GPS permission");
         }
 
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -66,16 +67,46 @@ public class LocationService extends Service {
         return START_NOT_STICKY;
     }
 
+    public class LocationServiceBinder extends Binder {
+        public float getDistance() {
+            return LocationService.this.getDistance();
+        }
+
+        public double getDuration() {
+            return LocationService.this.getDuration();
+        }
+
+        public boolean currentlyTracking() {
+            return LocationService.this.currentlyTracking();
+        }
+
+        public void playJourney() {
+            LocationService.this.playJourney();
+        }
+
+        public void saveJourney() {
+            LocationService.this.saveJourney();
+        }
+
+        public void notifyGPSEnabled() {
+            LocationService.this.notifyGPSEnabled();
+        }
+
+        public void changeGPSRequestFrequency(int time, int dist) {
+            LocationService.this.changeGPSRequestFrequency(time, dist);
+        }
+    }
+
 
     private void addNotification() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Tracking Journey";
+            CharSequence name = "Track the journey";
             String description = "Keep Running!";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int i = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,
-                    importance);
+                    i);
             channel.setDescription(description);
             notificationManager.createNotificationChannel(channel);
         }
@@ -83,14 +114,14 @@ public class LocationService extends Service {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,
+        NotificationCompat.Builder myBuilder = new NotificationCompat.Builder(this,
                 CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Tracking Journey")
-                .setContentText("Keep Running!")
+                .setContentTitle("Track the journey")
+                .setContentText("Keep running!")
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, myBuilder.build());
     }
 
     @Override
@@ -103,7 +134,7 @@ public class LocationService extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
 
-        Log.d("mdp", "Location service is broken");
+        Log.d("M", "Location service is broken");
     }
 
     @Override
@@ -168,16 +199,16 @@ public class LocationService extends Service {
         startTime = 0;
         myLocationListener.newJourney();
 
-        Log.d("mdp", "Journey saved with id = " + journeyID);
+        Log.d("M", "Journey saved with id = " + journeyID);
     }
 
     protected void changeGPSRequestFrequency(int time, int dist) {
         try {
             locationManager.removeUpdates(myLocationListener);
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, time, dist, myLocationListener);
-            Log.d("mdp", "New min time = " + time + ", min dist = " + dist);
+            Log.d("M", "New minimum time = " + time + ", shortest distance = " + dist);
         } catch (SecurityException e) {
-            Log.d("mdp", "No GPS permission");
+            Log.d("M", "No GPS permission");
         }
     }
 
@@ -186,7 +217,7 @@ public class LocationService extends Service {
         try {
             locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3, 3, myLocationListener);
         } catch (SecurityException e) {
-            Log.d("mdp", "No GPS permission");
+            Log.d("M", "No GPS permission");
         }
     }
 
@@ -196,33 +227,4 @@ public class LocationService extends Service {
         return formatter.format(date);
     }
 
-    public class LocationServiceBinder extends Binder {
-        public float getDistance() {
-            return LocationService.this.getDistance();
-        }
-
-        public double getDuration() {
-            return LocationService.this.getDuration();
-        }
-
-        public boolean currentlyTracking() {
-            return LocationService.this.currentlyTracking();
-        }
-
-        public void playJourney() {
-            LocationService.this.playJourney();
-        }
-
-        public void saveJourney() {
-            LocationService.this.saveJourney();
-        }
-
-        public void notifyGPSEnabled() {
-            LocationService.this.notifyGPSEnabled();
-        }
-
-        public void changeGPSRequestFrequency(int time, int dist) {
-            LocationService.this.changeGPSRequestFrequency(time, dist);
-        }
-    }
 }

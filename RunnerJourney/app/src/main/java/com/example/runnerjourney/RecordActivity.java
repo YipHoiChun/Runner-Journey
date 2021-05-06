@@ -34,7 +34,7 @@ public class RecordActivity extends AppCompatActivity {
     private Button stopButton;
     private static final int PERMISSION_GPS_CODE = 1;
 
-    private Handler postBack = new Handler();
+    private Handler handler = new Handler();
 
     private ServiceConnection lsc = new ServiceConnection() {
         @Override
@@ -64,7 +64,7 @@ public class RecordActivity extends AppCompatActivity {
                         final String dist = String.format("%.2f KM", distance);
                         final String avg_speed = String.format("%.2f KM/H", avgSpeed);
 
-                        postBack.post(new Runnable() {
+                        handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 durationText.setText(time);

@@ -10,7 +10,7 @@ public class MyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent i) {
-        Log.d("mdp", "Low battery");
+        Log.d("M", "Low battery");
         Intent intent = new Intent(context, LocationService.class);
         Bundle b = new Bundle();
         b.putBoolean("battery", true);

@@ -7,6 +7,23 @@
     android:orientation="vertical"
     tools:context=".EditActivity">
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickChangeImage"
+        android:text="Change Image" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:onClick="onClickSave"
+        android:padding="8dp"
+        android:text="SAVE" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
@@ -69,21 +86,6 @@
         android:layout_height="160dp"
         app:srcCompat="@drawable/running" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickChangeImage"
-        android:text="Change Image" />
 
-    <Button
-        android:id="@+id/button5"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:onClick="onClickSave"
-        android:padding="8dp"
-        android:text="SAVE" />
 
 </LinearLayout>

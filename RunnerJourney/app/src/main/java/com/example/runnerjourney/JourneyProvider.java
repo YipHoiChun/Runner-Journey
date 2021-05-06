@@ -25,7 +25,7 @@ public class JourneyProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Log.d("mdp", "The journey content provider has been created");
+        Log.d("M", "The journey content provider has been created");
         dbHelper = new DBHelper(this.getContext());
         database = dbHelper.getWritableDatabase();
         return (database != null);

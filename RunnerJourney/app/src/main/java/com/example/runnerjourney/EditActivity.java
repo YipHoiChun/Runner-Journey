@@ -129,12 +129,12 @@ public class EditActivity extends AppCompatActivity {
         try {
             rating = Integer.parseInt(newRating.getText().toString());
         } catch (Exception e) {
-            Log.d("mdp", "The following is not a number: " + newRating.getText().toString());
+            Log.d("M", "The following is not a number: " + newRating.getText().toString());
             return -1;
         }
 
         if (rating < 0 || rating > 5) {
-            Log.d("mdp", "Rating must be between 0-5");
+            Log.d("M", "Rating must be between 0-5");
             return -1;
         }
         return rating;

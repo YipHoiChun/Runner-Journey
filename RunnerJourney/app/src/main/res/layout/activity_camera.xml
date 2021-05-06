@@ -5,23 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".CameraActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.89"
-        android:id="@+id/imgpic"/>
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblimgpath"/>
+        android:id="@+id/imageViewHigh"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:srcCompat="@drawable/ic_action_camera"
+        tools:ignore="VectorDrawableCompat" />
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="prc_camera"
-        android:text="Camera"/>
+        android:layout_marginBottom="16dp"
+        android:text="Take photos" />
+
+
 
 </LinearLayout>

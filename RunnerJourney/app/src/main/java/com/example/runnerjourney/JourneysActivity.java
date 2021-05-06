@@ -173,12 +173,12 @@ public class JourneysActivity extends ListActivity {
         String[] dateParts = date.split("/");
         date = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
 
-        Log.d("mdp", "Searching for date " + date);
+        Log.d("M", "Searching for date " + date);
 
         Cursor cursor = getContentResolver().query(JourneyProviderContract.J_URI,
                 new String[]{JourneyProviderContract.J_ID + " _id", JourneyProviderContract.J_NAME, JourneyProviderContract.J_IMAGE}, JourneyProviderContract.J_DATE + " = ?", new String[]{date}, JourneyProviderContract.J_NAME + " ASC");
 
-        Log.d("mdp", "Journeys Loaded: " + cursor.getCount());
+        Log.d("M", "Journeys Loaded: " + cursor.getCount());
 
         itemArrayList = new ArrayList<JourneyItem>();
         journeyAdapter.notifyDataSetChanged();
