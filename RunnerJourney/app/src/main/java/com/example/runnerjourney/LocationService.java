@@ -31,8 +31,8 @@ public class LocationService extends Service {
     private long startTime = 0;
     private long stopTime = 0;
 
-    final int TIME_INTERVAL = 3;
-    final int DIST_INTERVAL = 3;
+    final int TI = 3;//Time Interval
+    final int DI = 3;//Dist Interval
 
     @Override
     public void onCreate() {
@@ -45,7 +45,7 @@ public class LocationService extends Service {
 
 
         try {
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TIME_INTERVAL, DIST_INTERVAL, myLocationListener);
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, TI, DI, myLocationListener);
         } catch (SecurityException e) {
             Log.d("M", "No GPS permission");
         }
@@ -60,7 +60,7 @@ public class LocationService extends Service {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null && bundle.getBoolean("battery")) {
-                changeGPSRequestFrequency(TIME_INTERVAL * 3, DIST_INTERVAL * 3);
+                changeGPSRequestFrequency(TI * 3, DI * 3);
             }
         }
 

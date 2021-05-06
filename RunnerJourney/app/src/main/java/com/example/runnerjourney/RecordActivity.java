@@ -26,12 +26,8 @@ public class RecordActivity extends AppCompatActivity {
 
     private LocationService.LocationServiceBinder locationService;
 
-    private TextView distanceText;
-    private TextView avgSpeedText;
-    private TextView durationText;
-
-    private Button playButton;
-    private Button stopButton;
+    private TextView distanceText, avgSpeedText, durationText;
+    private Button startButton, stopButton;
     private static final int PERMISSION_GPS_CODE = 1;
 
     private Handler handler = new Handler();
@@ -40,9 +36,7 @@ public class RecordActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationService = (LocationService.LocationServiceBinder) iBinder;
-
             initButtons();
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -50,11 +44,9 @@ public class RecordActivity extends AppCompatActivity {
                         float d = (float) locationService.getDuration();
                         long duration = (long) d;
                         float distance = locationService.getDistance();
-
                         long hours = duration / 3600;
                         long minutes = (duration % 3600) / 60;
                         long seconds = duration % 60;
-
                         float avgSpeed = 0;
                         if (d != 0) {
                             avgSpeed = distance / (d / 3600);
@@ -75,8 +67,8 @@ public class RecordActivity extends AppCompatActivity {
 
                         try {
                             Thread.sleep(500);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
                         }
                     }
                 }
@@ -92,16 +84,16 @@ public class RecordActivity extends AppCompatActivity {
     private void initButtons() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             stopButton.setEnabled(false);
-            playButton.setEnabled(false);
+            startButton.setEnabled(false);
             return;
         }
 
         if (locationService != null && locationService.currentlyTracking()) {
             stopButton.setEnabled(true);
-            playButton.setEnabled(false);
+            startButton.setEnabled(false);
         } else {
             stopButton.setEnabled(false);
-            playButton.setEnabled(true);
+            startButton.setEnabled(true);
         }
     }
 
@@ -113,17 +105,17 @@ public class RecordActivity extends AppCompatActivity {
         durationText = findViewById(R.id.durationText);
         avgSpeedText = findViewById(R.id.avgSpeedText);
 
-        playButton = findViewById(R.id.startButton);
+        startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
 
         stopButton.setEnabled(false);
-        playButton.setEnabled(false);
+        startButton.setEnabled(false);
 
         try {
             MyReceiver receiver = new MyReceiver();
             registerReceiver(receiver, new IntentFilter(
                     Intent.ACTION_BATTERY_LOW));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException illegalArgumentException) {
         }
 
 
@@ -136,7 +128,7 @@ public class RecordActivity extends AppCompatActivity {
 
     public void onClickPlay(View view) {
         locationService.playJourney();
-        playButton.setEnabled(false);
+        startButton.setEnabled(false);
         stopButton.setEnabled(true);
     }
 
@@ -144,7 +136,7 @@ public class RecordActivity extends AppCompatActivity {
         float distance = locationService.getDistance();
         locationService.saveJourney();
 
-        playButton.setEnabled(false);
+        startButton.setEnabled(false);
         stopButton.setEnabled(false);
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
@@ -158,7 +150,7 @@ public class RecordActivity extends AppCompatActivity {
         try {
             MyReceiver receiver = new MyReceiver();
             unregisterReceiver(receiver);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException illegalArgumentException) {
         }
 
         if (lsc != null) {
@@ -204,7 +196,7 @@ public class RecordActivity extends AppCompatActivity {
                     }
                 } else {
                     stopButton.setEnabled(false);
-                    playButton.setEnabled(false);
+                    startButton.setEnabled(false);
                 }
                 return;
 
