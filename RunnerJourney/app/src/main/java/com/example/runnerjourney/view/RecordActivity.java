@@ -23,19 +23,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.runnerjourney.LocationService;
-import com.example.runnerjourney.MyReceiver;
 import com.example.runnerjourney.R;
 
 public class RecordActivity extends AppCompatActivity {
 
     private LocationService.LocationServiceBinder locationService;
 
-    private TextView distanceText, avgSpeedText, durationText;
+    private TextView distanceTV, avgSpeedTV, durationTV;
     private Button startButton, stopButton;
     private static final int PERMISSION_GPS_CODE = 1;
 
     private Handler handler = new Handler();
-
+    //If you are currently tracking enable the stop button and disable the start button
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -63,9 +62,9 @@ public class RecordActivity extends AppCompatActivity {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                durationText.setText(time);
-                                avgSpeedText.setText(avg_speed);
-                                distanceText.setText(dist);
+                                durationTV.setText(time);
+                                avgSpeedTV.setText(avg_speed);
+                                distanceTV.setText(dist);
                             }
                         });
 
@@ -86,12 +85,13 @@ public class RecordActivity extends AppCompatActivity {
     };
 
     private void initButtons() {
+        //No permission will no button
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             stopButton.setEnabled(false);
             startButton.setEnabled(false);
             return;
         }
-
+        // Enable the stopButton and disable the startButton if it is currently tracking
         if (locationService != null && locationService.currentlyTracking()) {
             stopButton.setEnabled(true);
             startButton.setEnabled(false);
@@ -105,23 +105,15 @@ public class RecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        distanceText = findViewById(R.id.distanceText);
-        durationText = findViewById(R.id.durationText);
-        avgSpeedText = findViewById(R.id.avgSpeedText);
+        distanceTV = findViewById(R.id.textViewDistance);
+        durationTV = findViewById(R.id.textViewDuration);
+        avgSpeedTV = findViewById(R.id.textViewAvgSpeed);
 
         startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
 
         stopButton.setEnabled(false);
         startButton.setEnabled(false);
-
-        try {
-            MyReceiver receiver = new MyReceiver();
-            registerReceiver(receiver, new IntentFilter(
-                    Intent.ACTION_BATTERY_LOW));
-        } catch (IllegalArgumentException illegalArgumentException) {
-        }
-
 
         handlePermissions();
 
@@ -150,13 +142,6 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        try {
-            MyReceiver receiver = new MyReceiver();
-            unregisterReceiver(receiver);
-        } catch (IllegalArgumentException illegalArgumentException) {
-        }
-
         if (serviceConnection != null) {
             unbindService(serviceConnection);
             serviceConnection = null;
@@ -234,7 +219,6 @@ public class RecordActivity extends AppCompatActivity {
 
     private void handlePermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 DialogFragment modal = NoPermissionDialogue.newInstance();
                 modal.show(getSupportFragmentManager(), "Permissions");

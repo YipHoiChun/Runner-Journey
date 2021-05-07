@@ -18,15 +18,6 @@
         <activity android:name=".view.SingleJourneyActivity" />
         <activity android:name=".view.EditActivity" />
 
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BATTERY_LOW" />
-            </intent-filter>
-        </receiver>
-
         <service
             android:name=".LocationService"
             android:enabled="true"

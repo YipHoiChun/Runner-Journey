@@ -116,7 +116,7 @@ public class JourneysActivity extends ListActivity {
     }
 
     private void setUpDateDialogue() {
-        textView = findViewById(R.id.selectDateText);
+        textView = findViewById(R.id.selectDateTextView);
         listView = getListView();
 
         textView.setOnClickListener(new View.OnClickListener() {
