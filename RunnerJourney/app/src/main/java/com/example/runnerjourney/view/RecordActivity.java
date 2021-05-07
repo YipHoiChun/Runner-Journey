@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +21,10 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.runnerjourney.LocationService;
+import com.example.runnerjourney.MyReceiver;
+import com.example.runnerjourney.R;
 
 public class RecordActivity extends AppCompatActivity {
 

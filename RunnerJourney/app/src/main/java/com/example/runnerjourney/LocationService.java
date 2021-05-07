@@ -18,6 +18,8 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.runnerjourney.view.MainActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

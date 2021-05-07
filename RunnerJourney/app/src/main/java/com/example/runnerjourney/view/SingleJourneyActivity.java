@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
 
 import java.io.InputStream;
 

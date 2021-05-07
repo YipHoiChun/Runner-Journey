@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
 
 import java.io.InputStream;
 

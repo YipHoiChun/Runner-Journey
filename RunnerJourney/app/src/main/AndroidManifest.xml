@@ -14,9 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnerJourney">
-        <activity android:name=".CameraActivity"></activity>
-        <activity android:name=".SingleJourneyActivity" />
-        <activity android:name=".EditActivity" />
+        <activity android:name=".view.CameraActivity"></activity>
+        <activity android:name=".view.SingleJourneyActivity" />
+        <activity android:name=".view.EditActivity" />
 
         <receiver
             android:name=".MyReceiver"
@@ -48,10 +48,10 @@
 
         </provider>
 
-        <activity android:name=".MapActivity" />
-        <activity android:name=".JourneysActivity" />
-        <activity android:name=".RecordActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MapActivity" />
+        <activity android:name=".view.JourneysActivity" />
+        <activity android:name=".view.RecordActivity" />
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

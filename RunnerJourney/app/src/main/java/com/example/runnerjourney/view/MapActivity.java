@@ -1,10 +1,12 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.fragment.app.FragmentActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
 
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
