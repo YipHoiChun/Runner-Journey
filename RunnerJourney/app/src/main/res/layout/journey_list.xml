@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/journeyList_journeyImg"
+        android:id="@+id/list_image"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         app:srcCompat="@drawable/running" />
 
     <TextView
-        android:id="@+id/singleJourney"
+        android:id="@+id/list_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

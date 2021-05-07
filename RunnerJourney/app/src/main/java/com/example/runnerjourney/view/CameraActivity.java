@@ -30,7 +30,7 @@ public class CameraActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName() + "My";
 
-    private String mPath = "";
+    private String myPath = "";
     public static final int REQUEST_CAMERA = 100;
 
     @Override
@@ -69,7 +69,7 @@ public class CameraActivity extends AppCompatActivity {
             //Giving file names and file formats
             File imageFile = File.createTempFile(fileName, ".jpg", dir);
             // Give the location of the photo file in the global variable for easy access later
-            mPath = imageFile.getAbsolutePath();
+            myPath = imageFile.getAbsolutePath();
             return imageFile;
         } catch (IOException e) {
             return null;
@@ -86,7 +86,7 @@ public class CameraActivity extends AppCompatActivity {
             ImageView imageHigh = findViewById(R.id.imageViewHigh);
             new Thread(() -> {
                 // Get the photo file in BitmapFactory with the file URI path and process it as AtomicReference<Bitmap> to facilitate the subsequent rotation of the image.
-                AtomicReference<Bitmap> getHighImage = new AtomicReference<>(BitmapFactory.decodeFile(mPath));
+                AtomicReference<Bitmap> getHighImage = new AtomicReference<>(BitmapFactory.decodeFile(myPath));
                 Matrix matrix = new Matrix();
                 matrix.setRotate(90f);//Turn 90 degrees
                 getHighImage.set(Bitmap.createBitmap(getHighImage.get()

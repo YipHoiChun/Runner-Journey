@@ -55,8 +55,8 @@ public class JourneysActivity extends ListActivity {
 
             JourneyItem item = items.get(position);
             if (item != null) {
-                TextView text = view.findViewById(R.id.singleJourney);
-                ImageView img = view.findViewById(R.id.journeyList_journeyImg);
+                TextView text = view.findViewById(R.id.list_text);
+                ImageView img = view.findViewById(R.id.list_image);
                 if (text != null) {
                     text.setText(item.getName());
                 }

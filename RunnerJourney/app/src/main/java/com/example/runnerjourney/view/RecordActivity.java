@@ -36,7 +36,7 @@ public class RecordActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
 
-    private ServiceConnection lsc = new ServiceConnection() {
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationService = (LocationService.LocationServiceBinder) iBinder;
@@ -127,7 +127,7 @@ public class RecordActivity extends AppCompatActivity {
 
         startService(new Intent(this, LocationService.class));
         bindService(
-                new Intent(this, LocationService.class), lsc, Context.BIND_AUTO_CREATE);
+                new Intent(this, LocationService.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     public void onClickPlay(View view) {
@@ -157,9 +157,9 @@ public class RecordActivity extends AppCompatActivity {
         } catch (IllegalArgumentException illegalArgumentException) {
         }
 
-        if (lsc != null) {
-            unbindService(lsc);
-            lsc = null;
+        if (serviceConnection != null) {
+            unbindService(serviceConnection);
+            serviceConnection = null;
         }
     }
 
