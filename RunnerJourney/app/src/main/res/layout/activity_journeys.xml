@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".JourneysActivity">
+    tools:context=".view.JourneysActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +18,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/selectDateText"
+        android:id="@+id/selectDateTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"

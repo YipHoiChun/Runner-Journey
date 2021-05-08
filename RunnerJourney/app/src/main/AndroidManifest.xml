@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -13,18 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnerJourney">
-        <activity android:name=".CameraActivity"></activity>
-        <activity android:name=".SingleJourneyActivity" />
-        <activity android:name=".EditActivity" />
-
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BATTERY_LOW" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".view.CameraActivity"></activity>
+        <activity android:name=".view.SingleJourneyActivity" />
+        <activity android:name=".view.EditActivity" />
 
         <service
             android:name=".LocationService"
@@ -36,10 +28,21 @@
             android:authorities="com.example.runnerjourney.JourneyProvider"
             android:exported="true" />
 
-        <activity android:name=".MapActivity" />
-        <activity android:name=".JourneysActivity" />
-        <activity android:name=".RecordActivity" />
-        <activity android:name=".MainActivity">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.runnerjourney.CameraEx"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+
+        </provider>
+
+        <activity android:name=".view.MapActivity" />
+        <activity android:name=".view.JourneysActivity" />
+        <activity android:name=".view.RecordActivity" />
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

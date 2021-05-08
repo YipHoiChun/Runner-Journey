@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,27 +22,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.runnerjourney.LocationService;
+import com.example.runnerjourney.R;
+
 public class RecordActivity extends AppCompatActivity {
 
     private LocationService.LocationServiceBinder locationService;
 
-    private TextView distanceText;
-    private TextView avgSpeedText;
-    private TextView durationText;
-
-    private Button playButton;
-    private Button stopButton;
+    private TextView distanceTV, avgSpeedTV, durationTV;
+    private Button startButton, stopButton;
     private static final int PERMISSION_GPS_CODE = 1;
 
-    private Handler postBack = new Handler();
-
-    private ServiceConnection lsc = new ServiceConnection() {
+    private Handler handler = new Handler();
+    //If you are currently tracking enable the stop button and disable the start button
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationService = (LocationService.LocationServiceBinder) iBinder;
-
             initButtons();
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -50,11 +47,9 @@ public class RecordActivity extends AppCompatActivity {
                         float d = (float) locationService.getDuration();
                         long duration = (long) d;
                         float distance = locationService.getDistance();
-
                         long hours = duration / 3600;
                         long minutes = (duration % 3600) / 60;
                         long seconds = duration % 60;
-
                         float avgSpeed = 0;
                         if (d != 0) {
                             avgSpeed = distance / (d / 3600);
@@ -64,19 +59,19 @@ public class RecordActivity extends AppCompatActivity {
                         final String dist = String.format("%.2f KM", distance);
                         final String avg_speed = String.format("%.2f KM/H", avgSpeed);
 
-                        postBack.post(new Runnable() {
+                        handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                durationText.setText(time);
-                                avgSpeedText.setText(avg_speed);
-                                distanceText.setText(dist);
+                                durationTV.setText(time);
+                                avgSpeedTV.setText(avg_speed);
+                                distanceTV.setText(dist);
                             }
                         });
 
                         try {
                             Thread.sleep(500);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
                         }
                     }
                 }
@@ -90,18 +85,19 @@ public class RecordActivity extends AppCompatActivity {
     };
 
     private void initButtons() {
+        //No permission will no button
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             stopButton.setEnabled(false);
-            playButton.setEnabled(false);
+            startButton.setEnabled(false);
             return;
         }
-
+        // Enable the stopButton and disable the startButton if it is currently tracking
         if (locationService != null && locationService.currentlyTracking()) {
             stopButton.setEnabled(true);
-            playButton.setEnabled(false);
+            startButton.setEnabled(false);
         } else {
             stopButton.setEnabled(false);
-            playButton.setEnabled(true);
+            startButton.setEnabled(true);
         }
     }
 
@@ -109,34 +105,26 @@ public class RecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        distanceText = findViewById(R.id.distanceText);
-        durationText = findViewById(R.id.durationText);
-        avgSpeedText = findViewById(R.id.avgSpeedText);
+        distanceTV = findViewById(R.id.textViewDistance);
+        durationTV = findViewById(R.id.textViewDuration);
+        avgSpeedTV = findViewById(R.id.textViewAvgSpeed);
 
-        playButton = findViewById(R.id.startButton);
+        startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
 
         stopButton.setEnabled(false);
-        playButton.setEnabled(false);
-
-        try {
-            MyReceiver receiver = new MyReceiver();
-            registerReceiver(receiver, new IntentFilter(
-                    Intent.ACTION_BATTERY_LOW));
-        } catch (IllegalArgumentException e) {
-        }
-
+        startButton.setEnabled(false);
 
         handlePermissions();
 
         startService(new Intent(this, LocationService.class));
         bindService(
-                new Intent(this, LocationService.class), lsc, Context.BIND_AUTO_CREATE);
+                new Intent(this, LocationService.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     public void onClickPlay(View view) {
         locationService.playJourney();
-        playButton.setEnabled(false);
+        startButton.setEnabled(false);
         stopButton.setEnabled(true);
     }
 
@@ -144,7 +132,7 @@ public class RecordActivity extends AppCompatActivity {
         float distance = locationService.getDistance();
         locationService.saveJourney();
 
-        playButton.setEnabled(false);
+        startButton.setEnabled(false);
         stopButton.setEnabled(false);
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
@@ -154,16 +142,9 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        try {
-            MyReceiver receiver = new MyReceiver();
-            unregisterReceiver(receiver);
-        } catch (IllegalArgumentException e) {
-        }
-
-        if (lsc != null) {
-            unbindService(lsc);
-            lsc = null;
+        if (serviceConnection != null) {
+            unbindService(serviceConnection);
+            serviceConnection = null;
         }
     }
 
@@ -204,7 +185,7 @@ public class RecordActivity extends AppCompatActivity {
                     }
                 } else {
                     stopButton.setEnabled(false);
-                    playButton.setEnabled(false);
+                    startButton.setEnabled(false);
                 }
                 return;
 
@@ -238,7 +219,6 @@ public class RecordActivity extends AppCompatActivity {
 
     private void handlePermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 DialogFragment modal = NoPermissionDialogue.newInstance();
                 modal.show(getSupportFragmentManager(), "Permissions");

@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,18 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
+
 import java.io.InputStream;
 
 public class SingleJourneyActivity extends AppCompatActivity {
     private ImageView imageView;
-    private TextView distanceTV;
-    private TextView avgTV;
-    private TextView timeTV;
-    private TextView dateTV;
-    private TextView ratingTV;
-    private TextView commentTV;
-    private TextView titleTV;
-
+    private TextView distanceTextView, avgSTextView, timeTextView, dateTextView, ratingTextView, commentTextView, titleTextView;
     private long journeyID;
 
     private Handler handler = new Handler();
@@ -56,13 +52,13 @@ public class SingleJourneyActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         imageView = findViewById(R.id.ViewSingleJourney_journeyImg);
-        distanceTV = findViewById(R.id.Statistics_recordDistance);
-        avgTV = findViewById(R.id.Statistics_distanceToday);
-        timeTV = findViewById(R.id.Statistics_timeToday);
-        dateTV = findViewById(R.id.ViewSingleJourney_dateText);
-        ratingTV = findViewById(R.id.ViewSingleJourney_ratingText);
-        commentTV = findViewById(R.id.ViewSingleJourney_commentText);
-        titleTV = findViewById(R.id.ViewSingleJourney_titleText);
+        distanceTextView = findViewById(R.id.Statistics_recordDistance);
+        avgSTextView = findViewById(R.id.Statistics_distanceToday);
+        timeTextView = findViewById(R.id.Statistics_timeToday);
+        dateTextView = findViewById(R.id.ViewSingleJourney_dateText);
+        ratingTextView = findViewById(R.id.ViewSingleJourney_ratingText);
+        commentTextView = findViewById(R.id.ViewSingleJourney_commentText);
+        titleTextView = findViewById(R.id.ViewSingleJourney_titleText);
         journeyID = bundle.getLong("journeyID");
 
         populateView();
@@ -103,18 +99,18 @@ public class SingleJourneyActivity extends AppCompatActivity {
             long minutes = (time % 3600) / 60;
             long seconds = time % 60;
 
-            distanceTV.setText(String.format("%.2f KM", distance));
-            avgTV.setText(String.format("%.2f KM/H", avgSpeed));
-            timeTV.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+            distanceTextView.setText(String.format("%.2f KM", distance));
+            avgSTextView.setText(String.format("%.2f KM/H", avgSpeed));
+            timeTextView.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
             String date = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_DATE));
             String[] dateParts = date.split("-");
             date = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
 
-            dateTV.setText(date);
-            ratingTV.setText(cursor.getInt(cursor.getColumnIndex(JourneyProviderContract.J_RATING)) + "");
-            commentTV.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_COMMENT)));
-            titleTV.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
+            dateTextView.setText(date);
+            ratingTextView.setText(cursor.getInt(cursor.getColumnIndex(JourneyProviderContract.J_RATING)) + "");
+            commentTextView.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_COMMENT)));
+            titleTextView.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
 
             String strUri = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE));
             if (strUri != null) {

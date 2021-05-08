@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RunnerJourney</string>
+    <string name="start">開始</string>
+    <string name="stop">結束</string>
+    <string name="duration">行程時間：</string>
+    <string name="distance_run">行程距離：</string>
+    <string name="record">紀錄行程</string>
+    <string name="journey">行程</string>
+    <string name="journeys">行程</string>
+    <string name="select_date">選擇日期</string>
+    <string name="average_speed">平均速度：</string>
+    <string name="take_photos">拍照</string>
+    <string name="camera">相機</string>
+    <string name="edit_details">編輯詳細資料</string>
+    <string name="title">標題</string>
+    <string name="change_rating_1_5">變更評分（1-5）</string>
+    <string name="add_a_comment">添加評論</string>
+    <string name="comment">評論!</string>
+    <string name="change_image">變更圖片</string>
+    <string name="save">保存</string>
+    <string name="view_map">查看地圖</string>
+    <string name="edit_journey">編輯旅程</string>
+    <string name="date">日期：</string>
+    <string name="time">時間：</string>
+    <string name="distance">距離：</string>
+    <string name="a_comment">一條評論</string>
+</resources>

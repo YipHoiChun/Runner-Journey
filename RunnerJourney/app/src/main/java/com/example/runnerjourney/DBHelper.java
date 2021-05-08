@@ -16,9 +16,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "duration BIGINT NOT NULL," +
                 "distance REAL NOT NULL," +
                 "date DATETIME NOT NULL," +
-                "name varchar(256) NOT NULL DEFAULT 'Recorded Journey'," +
+                "name varchar(256) NOT NULL DEFAULT 'Journey'," +
                 "rating INTEGER NOT NULL DEFAULT 1," +
-                "comment varchar(256) NOT NULL DEFAULT ''," +
+                "comment varchar(256) NOT NULL DEFAULT 'None'," +
                 "image varchar(256) DEFAULT NULL);");
 
         db.execSQL("CREATE TABLE location (" +

@@ -1,20 +1,19 @@
 package com.example.runnerjourney;
-
-import android.content.ContentProvider;
-import android.content.ContentUris;
-import android.content.ContentValues;
+import android.net.Uri;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.util.Log;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
 
 public class JourneyProvider extends ContentProvider {
     DBHelper dbHelper;
     SQLiteDatabase database;
 
     private static final UriMatcher matcher;
-
+    //Map URIs to codes so that we can decide which queries to make based on the URIs we receive.
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(JourneyProviderContract.AUTHORITY, "journey", 1);
@@ -25,7 +24,7 @@ public class JourneyProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Log.d("mdp", "The journey content provider has been created");
+        Log.d("M", "The journey content provider has been created");
         dbHelper = new DBHelper(this.getContext());
         database = dbHelper.getWritableDatabase();
         return (database != null);
@@ -54,26 +53,26 @@ public class JourneyProvider extends ContentProvider {
                 tableName = "";
         }
 
-        long _id = database.insert(tableName, null, values);
-        Uri newRowUri = ContentUris.withAppendedId(uri, _id);
-
-        getContext().getContentResolver().notifyChange(newRowUri, null);
-        return newRowUri;
+        // Insert these values into the table and return the same URL, but with the ID appended.
+        long id = database.insert(tableName, null, values);
+        Uri uri1 = ContentUris.withAppendedId(uri, id);
+        getContext().getContentResolver().notifyChange(uri1, null);
+        return uri1;
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[]
+    public Cursor query(Uri uri, String[] strings, String selection, String[]
             selectionArgs, String sortOrder) {
 
         switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
-                return database.query("journey", projection, selection, selectionArgs, null, null, sortOrder);
+                return database.query("journey", strings, selection, selectionArgs, null, null, sortOrder);
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
-                return database.query("location", projection, selection, selectionArgs, null, null, sortOrder);
+                return database.query("location", strings, selection, selectionArgs, null, null, sortOrder);
             default:
                 return null;
         }
@@ -82,21 +81,21 @@ public class JourneyProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[]
             selectionArgs) {
-        String tableName;
+        String tN;//tableName
         int count;
 
         switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
-                tableName = "journey";
-                count = database.update(tableName, values, selection, selectionArgs);
+                tN = "journey";
+                count = database.update(tN, values, selection, selectionArgs);
                 break;
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
-                tableName = "location";
-                count = database.update(tableName, values, selection, selectionArgs);
+                tN = "location";
+                count = database.update(tN, values, selection, selectionArgs);
                 break;
             default:
                 return 0;
@@ -108,21 +107,21 @@ public class JourneyProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        String tableName;
+        String tN;//tableName
         int count;
-
+        //given URI to table name
         switch (matcher.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
-                tableName = "journey";
-                count = database.delete(tableName, selection, selectionArgs);
+                tN = "journey";
+                count = database.delete(tN, selection, selectionArgs);
                 break;
             case 4:
                 selection = "locationID = " + uri.getLastPathSegment();
             case 3:
-                tableName = "location";
-                count = database.delete(tableName, selection, selectionArgs);
+                tN = "location";
+                count = database.delete(tN, selection, selectionArgs);
                 break;
             default:
                 return 0;

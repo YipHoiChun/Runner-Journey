@@ -1,10 +1,12 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.fragment.app.FragmentActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
 
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,26 +37,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
 
-        Cursor c = getContentResolver().query(JourneyProviderContract.L_URI,
+        Cursor cursor = getContentResolver().query(JourneyProviderContract.L_URI,
                 null, JourneyProviderContract.L_JID + " = " + journeyID, null, null);
 
         PolylineOptions line = new PolylineOptions().clickable(false);
         LatLng firstLocation = null;
         LatLng lastLocation = null;
         try {
-            while (c.moveToNext()) {
-                LatLng loc = new LatLng(c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LATITUDE)),
-                        c.getDouble(c.getColumnIndex(JourneyProviderContract.L_LONGITUDE)));
-                if (c.isFirst()) {
+            while (cursor.moveToNext()) {
+                LatLng loc = new LatLng(cursor.getDouble(cursor.getColumnIndex(JourneyProviderContract.L_LATITUDE)),
+                        cursor.getDouble(cursor.getColumnIndex(JourneyProviderContract.L_LONGITUDE)));
+                if (cursor.isFirst()) {
                     firstLocation = loc;
                 }
-                if (c.isLast()) {
+                if (cursor.isLast()) {
                     lastLocation = loc;
                 }
                 line.add(loc);
             }
         } finally {
-            c.close();
+            cursor.close();
         }
 
         float zoom = 15.0f;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".RecordActivity">
+    tools:context=".view.RecordActivity">
 
 
 
@@ -20,14 +20,14 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Average speed:"
+        android:text="@string/average_speed"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/holo_green_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distance" />
 
     <TextView
-        android:id="@+id/avgSpeedText"
+        android:id="@+id/textViewAvgSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_0_00_km_h"
@@ -45,7 +45,7 @@
         android:textColor="@android:color/holo_green_dark" />
 
     <TextView
-        android:id="@+id/durationText"
+        android:id="@+id/textViewDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_00_00_00"
@@ -61,7 +61,7 @@
         android:textColor="@android:color/holo_green_dark" />
 
     <TextView
-        android:id="@+id/distanceText"
+        android:id="@+id/textViewDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_0_00_km"

@@ -2,14 +2,30 @@
     <string name="app_name">RunnerJourney</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
-    <string name="_0_00_km_h">0.00 KM/H</string>
-    <string name="_00_00_00">00:00:00</string>
-    <string name="_0_00_km">0.00 KM</string>
+    <string name="_0_00_km_h" translatable="false">0.00 KM/H</string>
+    <string name="_00_00_00" translatable="false">00:00:00</string>
+    <string name="_0_00_km" translatable="false">0.00 KM</string>
     <string name="duration">Duration:</string>
     <string name="distance_run">Distance run:</string>
     <string name="record">Record</string>
     <string name="journey">Journey</string>
     <string name="journeys">Journeys</string>
     <string name="select_date">Select Date</string>
-    <string name="click_on_a_specific_journey_for_more_information">Click on a specific journey for more information</string>
+    <string name="click_on_a_specific_journey_for_more_information" translatable="false">Click on a specific journey for more information</string>
+    <string name="average_speed">Average speed:</string>
+    <string name="take_photos">Take photos</string>
+    <string name="camera">Camera</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="title">Title</string>
+    <string name="change_rating_1_5">Change Rating(1-5)</string>
+    <string name="add_a_comment">Add a Comment</string>
+    <string name="comment">Comment!</string>
+    <string name="change_image">Change Image</string>
+    <string name="save">Save</string>
+    <string name="view_map">VIEW MAP</string>
+    <string name="edit_journey">EDIT JOURNEY</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="distance">Distance:</string>
+    <string name="a_comment">A Comment</string>
 </resources>

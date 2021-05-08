@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +17,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
+
 import java.io.InputStream;
 
 public class EditActivity extends AppCompatActivity {
     private final int RESULT_LOAD_IMG = 1;
-
-    private ImageView journeyImge;
-    private EditText titleEditText;
-    private EditText commentEditText;
-    private EditText ratingEditText;
+    private ImageView journeyImage;
+    private EditText titleEditText, commentEditText, ratingEditText;
     private long journeyID;
-
     private Uri selectedJourneyImg;
 
     @Override
@@ -35,15 +34,12 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         Bundle bundle = getIntent().getExtras();
-
-        journeyImge = findViewById(R.id.journeyImg);
+        journeyImage = findViewById(R.id.journeyImg);
         titleEditText = findViewById(R.id.titleEditText);
         commentEditText = findViewById(R.id.commentEditText);
         ratingEditText = findViewById(R.id.ratingEditText);
         journeyID = bundle.getLong("journeyID");
-
         selectedJourneyImg = null;
-
         populateEditText();
     }
 
@@ -88,7 +84,7 @@ public class EditActivity extends AppCompatActivity {
 
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        journeyImge.setImageBitmap(selectedImage);
+                        journeyImage.setImageBitmap(selectedImage);
                         selectedJourneyImg = imageUri;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -102,23 +98,23 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void populateEditText() {
-        Cursor c = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
+        Cursor cursor = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 
-        if (c.moveToFirst()) {
-            titleEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_NAME)));
-            commentEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_COMMENT)));
-            ratingEditText.setText(c.getString(c.getColumnIndex(JourneyProviderContract.J_RATING)));
+        if (cursor.moveToFirst()) {
+            titleEditText.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
+            commentEditText.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_COMMENT)));
+            ratingEditText.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_RATING)));
 
-            String strUri = c.getString(c.getColumnIndex(JourneyProviderContract.J_IMAGE));
+            String strUri = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE));
             if (strUri != null) {
                 try {
                     final Uri imageUri = Uri.parse(strUri);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    journeyImge.setImageBitmap(selectedImage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    journeyImage.setImageBitmap(selectedImage);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         }
@@ -128,13 +124,13 @@ public class EditActivity extends AppCompatActivity {
         int rating;
         try {
             rating = Integer.parseInt(newRating.getText().toString());
-        } catch (Exception e) {
-            Log.d("mdp", "The following is not a number: " + newRating.getText().toString());
+        } catch (Exception exception) {
+            Log.d("M", "The following is not a number: " + newRating.getText().toString());
             return -1;
         }
 
         if (rating < 0 || rating > 5) {
-            Log.d("mdp", "Rating must be between 0-5");
+            Log.d("M", "Rating must be between 0-5");
             return -1;
         }
         return rating;

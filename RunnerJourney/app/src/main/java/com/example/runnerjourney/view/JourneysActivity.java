@@ -1,4 +1,4 @@
-package com.example.runnerjourney;
+package com.example.runnerjourney.view;
 
 
 import android.app.DatePickerDialog;
@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,9 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.runnerjourney.JourneyProviderContract;
+import com.example.runnerjourney.R;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class JourneysActivity extends ListActivity {
     private ListView listView;
     private JourneyAdapter journeyAdapter;
     private ArrayList<JourneyItem> itemArrayList;
-
+    //ListView should display the name of the journey next to the custom image uploaded by the user
     private class JourneyAdapter extends ArrayAdapter<JourneyItem> {
         private ArrayList<JourneyItem> items;
 
@@ -53,8 +55,8 @@ public class JourneysActivity extends ListActivity {
 
             JourneyItem item = items.get(position);
             if (item != null) {
-                TextView text = view.findViewById(R.id.singleJourney);
-                ImageView img = view.findViewById(R.id.journeyList_journeyImg);
+                TextView text = view.findViewById(R.id.list_text);
+                ImageView img = view.findViewById(R.id.list_image);
                 if (text != null) {
                     text.setText(item.getName());
                 }
@@ -103,7 +105,7 @@ public class JourneysActivity extends ListActivity {
             }
         });
     }
-
+    // Update the view in case of title or image changes
     @Override
     public void onResume() {
         super.onResume();
@@ -114,7 +116,7 @@ public class JourneysActivity extends ListActivity {
     }
 
     private void setUpDateDialogue() {
-        textView = findViewById(R.id.selectDateText);
+        textView = findViewById(R.id.selectDateTextView);
         listView = getListView();
 
         textView.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +125,7 @@ public class JourneysActivity extends ListActivity {
                 int year;
                 int month;
                 int day;
-
+                // Select the current date if it is the first time you select a date, otherwise select the last selected date
                 if (textView.getText().toString().toLowerCase().equals("select date")) {
                     Calendar calender = Calendar.getInstance();
                     year = calender.get(Calendar.YEAR);
@@ -136,13 +138,13 @@ public class JourneysActivity extends ListActivity {
                     day = Integer.parseInt(dateParts[0]);
                 }
 
-                DatePickerDialog dialog = new DatePickerDialog(
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
                         JourneysActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateListener,
                         year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
             }
         });
 
@@ -173,12 +175,8 @@ public class JourneysActivity extends ListActivity {
         String[] dateParts = date.split("/");
         date = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
 
-        Log.d("mdp", "Searching for date " + date);
-
         Cursor cursor = getContentResolver().query(JourneyProviderContract.J_URI,
                 new String[]{JourneyProviderContract.J_ID + " _id", JourneyProviderContract.J_NAME, JourneyProviderContract.J_IMAGE}, JourneyProviderContract.J_DATE + " = ?", new String[]{date}, JourneyProviderContract.J_NAME + " ASC");
-
-        Log.d("mdp", "Journeys Loaded: " + cursor.getCount());
 
         itemArrayList = new ArrayList<JourneyItem>();
         journeyAdapter.notifyDataSetChanged();

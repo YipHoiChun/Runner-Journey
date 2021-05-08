@@ -43,16 +43,16 @@ public class MyLocationListener implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("mdp", "onStatusChanged: " + provider + " " + status);
+        Log.d("M", "onStatusChanged: " + provider + " " + status);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("mdp", "onProviderEnabled: " + provider);
+        Log.d("M", "onProviderEnabled: " + provider);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("mdp", "onProviderDisabled: " + provider);
+        Log.d("M", "onProviderDisabled: " + provider);
     }
 }
