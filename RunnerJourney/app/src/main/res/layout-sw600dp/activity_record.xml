@@ -12,9 +12,9 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="60sp"
         android:text="@string/record"
         tools:ignore="MissingConstraints" />
 
@@ -22,6 +22,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="60sp"
         android:text="@string/average_speed"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/black"
@@ -32,6 +33,7 @@
         android:id="@+id/textViewAvgSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="60sp"
         android:text="@string/_0_00_km_h"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/teal_700"
@@ -42,6 +44,7 @@
         android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="60sp"
         android:text="@string/duration"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/black" />
@@ -51,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/teal_700"
+        android:textSize="60sp"
         android:text="@string/_00_00_00"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -59,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/distance_run"
+        android:textSize="60sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/black" />
 
@@ -66,6 +71,7 @@
         android:id="@+id/textViewDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="60sp"
         android:text="@string/_0_00_km"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/teal_700" />
@@ -81,24 +87,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/startButton"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickPlay"
+            android:textSize="60sp"
             android:text="@string/start" />
 
         <Button
             android:id="@+id/stopButton"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickStop"
+            android:textSize="60sp"
             android:text="@string/stop" />
     </LinearLayout>
 

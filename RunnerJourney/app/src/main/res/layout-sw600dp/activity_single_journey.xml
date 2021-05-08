@@ -22,7 +22,8 @@
             <Button
                 android:id="@+id/button6"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
+                android:textSize="40sp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:onClick="onClickMap"
                 android:layout_margin="12dp"
@@ -30,8 +31,9 @@
 
             <Button
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:layout_width="400dp"
                 android:layout_margin="12dp"
                 android:onClick="onClickEdit"
                 android:text="@string/edit_journey" />
@@ -45,13 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="40sp"
             android:text="@string/title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageView
             android:id="@+id/ViewSingleJourney_journeyImg"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             app:srcCompat="@drawable/running" />
 
         <TextView
@@ -59,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/average_speed"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/Statistics_distanceToday"
@@ -67,7 +70,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/teal_700"
             android:text="0.00 KM/H"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/tv6"
@@ -75,7 +78,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:text="Rating:"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/ViewSingleJourney_ratingText"
@@ -83,7 +86,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/teal_700"
             android:text="3"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
 
 
@@ -93,7 +96,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:text="@string/date"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/ViewSingleJourney_dateText"
@@ -101,7 +104,7 @@
             android:layout_height="wrap_content"
             android:text="20/01/2020"
             android:textColor="@color/teal_700"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
 
         <TextView
@@ -110,14 +113,14 @@
             android:layout_height="wrap_content"
             android:text="@string/time"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
         <TextView
             android:id="@+id/Statistics_timeToday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00:00"
             android:textColor="@color/teal_700"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/tv34"
@@ -125,7 +128,7 @@
             android:layout_height="wrap_content"
             android:text="@string/distance"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/Statistics_recordDistance"
@@ -133,14 +136,14 @@
             android:layout_height="wrap_content"
             android:text="0.00 KM"
             android:textColor="@color/teal_700"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/ViewSingleJourney_commentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/a_comment"
-            android:textSize="18sp" />
+            android:textSize="40sp" />
 
 
 
