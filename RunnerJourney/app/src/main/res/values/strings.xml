@@ -22,10 +22,11 @@
     <string name="comment">Comment!</string>
     <string name="change_image">Change Image</string>
     <string name="save">Save</string>
-    <string name="view_map">VIEW MAP</string>
-    <string name="edit_journey">EDIT JOURNEY</string>
+    <string name="view_map">View Map</string>
+    <string name="edit_journey">Edit Journey</string>
     <string name="date">Date:</string>
     <string name="time">Time:</string>
     <string name="distance">Distance:</string>
     <string name="a_comment">A Comment</string>
+    <string name="rating">Rating:</string>
 </resources>

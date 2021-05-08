@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onClickMap"
                 android:layout_margin="12dp"
+                android:textAllCaps="false"
                 android:text="@string/view_map" />
 
             <Button
@@ -36,6 +37,7 @@
                 android:layout_width="400dp"
                 android:layout_margin="12dp"
                 android:onClick="onClickEdit"
+                android:textAllCaps="false"
                 android:text="@string/edit_journey" />
 
         </LinearLayout>
@@ -77,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="Rating:"
+            android:text="@string/rating"
             android:textSize="40sp" />
 
         <TextView
