@@ -21,7 +21,7 @@
             android:layout_margin="12dp"
             android:onClick="onClickMap"
             android:padding="8dp"
-            android:text="VIEW MAP" />
+            android:text="@string/view_map" />
 
         <Button
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -32,7 +32,7 @@
             android:layout_marginLeft="16dp"
             android:onClick="onClickEdit"
             android:padding="8dp"
-            android:text="EDIT JOURNEY"
+            android:text="@string/edit_journey"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageView
@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Average speed:"
+            android:text="@string/average_speed"
             android:textColor="#000"
             android:textSize="25sp" />
 
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="Date:"
+            android:text="@string/date"
             android:textSize="25sp" />
 
         <TextView
@@ -103,7 +103,7 @@
             android:id="@+id/ViewSingleJourney_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time:"
+            android:text="@string/time"
             android:textColor="#000"
             android:textSize="25sp" />
         <TextView
@@ -118,7 +118,7 @@
             android:id="@+id/tv34"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Distance:"
+            android:text="@string/distance"
             android:textColor="#000"
             android:textSize="25sp" />
 
@@ -134,7 +134,7 @@
             android:id="@+id/ViewSingleJourney_commentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A Comment"
+            android:text="@string/a_comment"
             android:textSize="18sp" />
 
 

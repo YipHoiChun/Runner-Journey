@@ -20,7 +20,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Average speed:"
+        android:text="@string/average_speed"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/holo_green_dark"
         app:layout_constraintStart_toStartOf="parent"
