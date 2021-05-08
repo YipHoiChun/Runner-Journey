@@ -65,9 +65,6 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 取得相片檔案的URI位址及設定檔案名稱
-     */
     private File getImageFile() {
         String time = new SimpleDateFormat("yyMMdd").format(new Date());
         String fileName = time + "_";
@@ -86,9 +83,9 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /* you can view here which photo to send back, requestCode is self-defined above, resultCode is -1 is to take pictures, 0 is the user did not take pictures */
+        // you can view here which photo to send back, requestCode is self-defined above, resultCode is -1 is to take pictures, 0 is the user did not take pictures
         Log.d(TAG, "onActivityResult: requestCode: " + requestCode + ", resultCode " + resultCode);
-        /**Photo Return*/
+        //Photo Return
         if (requestCode == REQUEST_CAMERA && resultCode == -1) {
             ImageView imageHigh = findViewById(R.id.imageViewHigh);
             new Thread(() -> {
