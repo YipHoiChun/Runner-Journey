@@ -1,14 +1,18 @@
 package com.example.runnerjourney.view;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -31,15 +35,18 @@ public class CameraActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName() + "My";
 
     private String myPath = "";
-    public static final int REQUEST_CAMERA = 100;
+    public static final int CAMERA_PERMISSION = 100;
+    public static final int REQUEST_CAMERA = 101;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
         Button button = findViewById(R.id.button);
-
+        if (checkSelfPermission(Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+            requestPermissions(new String[]{Manifest.permission.CAMERA},CAMERA_PERMISSION);
         button.setOnClickListener(v -> {
             Intent highIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //Check if permission has been obtained
@@ -86,18 +93,18 @@ public class CameraActivity extends AppCompatActivity {
             ImageView imageHigh = findViewById(R.id.imageViewHigh);
             new Thread(() -> {
                 // Get the photo file in BitmapFactory with the file URI path and process it as AtomicReference<Bitmap> to facilitate the subsequent rotation of the image.
-                AtomicReference<Bitmap> getHighImage = new AtomicReference<>(BitmapFactory.decodeFile(myPath));
+                AtomicReference<Bitmap> getImage = new AtomicReference<>(BitmapFactory.decodeFile(myPath));
                 Matrix matrix = new Matrix();
                 matrix.setRotate(90f);//Turn 90 degrees
-                getHighImage.set(Bitmap.createBitmap(getHighImage.get()
+                getImage.set(Bitmap.createBitmap(getImage.get()
                         , 0, 0
-                        , getHighImage.get().getWidth()
-                        , getHighImage.get().getHeight()
+                        , getImage.get().getWidth()
+                        , getImage.get().getHeight()
                         , matrix, true));
                 runOnUiThread(() -> {
                     // Set the picture with Glide (because rotating the picture is a time-consuming process, so it will be LAG for a while, and it must be threaded with Thread)
                     Glide.with(this)
-                            .load(getHighImage.get())
+                            .load(getImage.get())
                             .centerCrop()
                             .into(imageHigh);
                 });
