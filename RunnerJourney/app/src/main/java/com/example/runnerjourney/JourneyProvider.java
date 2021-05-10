@@ -12,14 +12,14 @@ public class JourneyProvider extends ContentProvider {
     DBHelper dbHelper;
     SQLiteDatabase database;
 
-    private static final UriMatcher matcher;
+    private static final UriMatcher URI_MATCHER;
     //Map URIs to codes so that we can decide which queries to make based on the URIs we receive.
     static {
-        matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(JourneyProviderContract.AUTHORITY, "journey", 1);
-        matcher.addURI(JourneyProviderContract.AUTHORITY, "journey/#", 2);
-        matcher.addURI(JourneyProviderContract.AUTHORITY, "location", 3);
-        matcher.addURI(JourneyProviderContract.AUTHORITY, "location/#", 4);
+        URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+        URI_MATCHER.addURI(JourneyProviderContract.AUTHORITY, "journey", 1);
+        URI_MATCHER.addURI(JourneyProviderContract.AUTHORITY, "journey/#", 2);
+        URI_MATCHER.addURI(JourneyProviderContract.AUTHORITY, "location", 3);
+        URI_MATCHER.addURI(JourneyProviderContract.AUTHORITY, "location/#", 4);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class JourneyProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         String tableName;
-        switch (matcher.match(uri)) {
+        switch (URI_MATCHER.match(uri)) {
             case 1:
                 tableName = "journey";
                 break;
@@ -64,7 +64,7 @@ public class JourneyProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] strings, String selection, String[]
             selectionArgs, String sortOrder) {
 
-        switch (matcher.match(uri)) {
+        switch (URI_MATCHER.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
@@ -84,7 +84,7 @@ public class JourneyProvider extends ContentProvider {
         String tN;//tableName
         int count;
 
-        switch (matcher.match(uri)) {
+        switch (URI_MATCHER.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
@@ -110,7 +110,7 @@ public class JourneyProvider extends ContentProvider {
         String tN;//tableName
         int count;
         //given URI to table name
-        switch (matcher.match(uri)) {
+        switch (URI_MATCHER.match(uri)) {
             case 2:
                 selection = "journeyID = " + uri.getLastPathSegment();
             case 1:
