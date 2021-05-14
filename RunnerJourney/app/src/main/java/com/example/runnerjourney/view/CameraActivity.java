@@ -33,7 +33,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CameraActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName() + "My";
-
     private String myPath = "";
     public static final int CAMERA_PERMISSION = 100;
     public static final int REQUEST_CAMERA = 101;

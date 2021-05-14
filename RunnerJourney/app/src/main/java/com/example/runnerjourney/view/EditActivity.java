@@ -23,7 +23,7 @@ import com.example.runnerjourney.R;
 import java.io.InputStream;
 
 public class EditActivity extends AppCompatActivity {
-    private final int RESULT_LOAD_IMG = 1;
+    private final int RESULT_LOAD_IMAGE = 1;
     private ImageView journeyImage;
     private EditText titleEditText, commentEditText, ratingEditText;
     private long journeyID;
@@ -40,9 +40,9 @@ public class EditActivity extends AppCompatActivity {
         ratingEditText = findViewById(R.id.ratingEditText);
         journeyID = bundle.getLong("journeyID");
         selectedJourneyImg = null;
-        populateEditText();
+        fillInEditText();
     }
-
+    //Save new title, image, comment and rating to the localDB
     public void onClickSave(View v) {
         int rating = checkRating(ratingEditText);
         if (rating == -1) {
@@ -63,11 +63,11 @@ public class EditActivity extends AppCompatActivity {
         getContentResolver().update(rowQueryUri, cv, null, null);
         finish();
     }
-
+    //go to activity to choose an image
     public void onClickChangeImage(View v) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -76,7 +76,7 @@ public class EditActivity extends AppCompatActivity {
         super.onActivityResult(reqCode, resultCode, data);
 
         switch (reqCode) {
-            case RESULT_LOAD_IMG: {
+            case RESULT_LOAD_IMAGE: {
                 if (resultCode == RESULT_OK) {
                     try {
                         final Uri imageUri = data.getData();
@@ -97,7 +97,7 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
-    private void populateEditText() {
+    private void fillInEditText() {
         Cursor cursor = getContentResolver().query(Uri.withAppendedPath(JourneyProviderContract.J_URI,
                 journeyID + ""), null, null, null, null);
 

@@ -36,7 +36,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
-
+        //Draw line
         Cursor cursor = getContentResolver().query(JourneyProviderContract.L_URI,
                 null, JourneyProviderContract.L_JID + " = " + journeyID, null, null);
 
