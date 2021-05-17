@@ -25,4 +25,5 @@
     <string name="time">時間：</string>
     <string name="distance">距離：</string>
     <string name="a_comment">一條評論</string>
+    <string name="rating">評分</string>
 </resources>

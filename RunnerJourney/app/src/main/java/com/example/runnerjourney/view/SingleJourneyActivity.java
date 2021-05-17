@@ -102,7 +102,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
             distanceTextView.setText(String.format("%.2f KM", distance));
             avgSTextView.setText(String.format("%.2f KM/H", avgSpeed));
             timeTextView.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
-
+            // // The date will be stored as year-month-day, converted to day-month-year
             String date = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_DATE));
             String[] dateParts = date.split("-");
             date = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
@@ -111,7 +111,7 @@ public class SingleJourneyActivity extends AppCompatActivity {
             ratingTextView.setText(cursor.getInt(cursor.getColumnIndex(JourneyProviderContract.J_RATING)) + "");
             commentTextView.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_COMMENT)));
             titleTextView.setText(cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_NAME)));
-
+            //// Display the image if the user has set it, otherwise display the default image
             String strUri = cursor.getString(cursor.getColumnIndex(JourneyProviderContract.J_IMAGE));
             if (strUri != null) {
                 try {

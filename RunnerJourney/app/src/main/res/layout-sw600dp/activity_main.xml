@@ -9,21 +9,22 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:src="@drawable/running"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="onClickRecord"
+        android:textSize="50sp"
         android:text="@string/record"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
@@ -34,14 +35,15 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="onClickView"
+        android:textSize="50sp"
         android:text="@string/journey"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
@@ -51,8 +53,8 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="25dp"
@@ -60,6 +62,7 @@
         android:layout_marginRight="8dp"
         android:onClick="onClickCamera"
         android:textAllCaps="false"
+        android:textSize="50sp"
         android:text="@string/camera"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"

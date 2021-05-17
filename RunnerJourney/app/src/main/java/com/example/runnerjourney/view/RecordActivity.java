@@ -108,15 +108,11 @@ public class RecordActivity extends AppCompatActivity {
         distanceTV = findViewById(R.id.textViewDistance);
         durationTV = findViewById(R.id.textViewDuration);
         avgSpeedTV = findViewById(R.id.textViewAvgSpeed);
-
         startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
-
         stopButton.setEnabled(false);
         startButton.setEnabled(false);
-
         handlePermissions();
-
         startService(new Intent(this, LocationService.class));
         bindService(
                 new Intent(this, LocationService.class), serviceConnection, Context.BIND_AUTO_CREATE);
