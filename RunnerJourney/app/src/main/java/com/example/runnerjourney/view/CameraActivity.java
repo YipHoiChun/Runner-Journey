@@ -42,14 +42,13 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
         Button button = findViewById(R.id.button);
         if (checkSelfPermission(Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
             requestPermissions(new String[]{Manifest.permission.CAMERA},CAMERA_PERMISSION);
         button.setOnClickListener(v -> {
-            Intent highIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //Check if permission has been obtained
-            if (highIntent.resolveActivity(getPackageManager()) == null) return;
+            if (intent.resolveActivity(getPackageManager()) == null) return;
             //Get the URI address of the photo file and set the file name
             File imageFile = getImageFile();
             if (imageFile == null) return;
@@ -59,8 +58,8 @@ public class CameraActivity extends AppCompatActivity {
                     "com.example.runnerjourney.CameraEx",
                     imageFile
             );
-            highIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(highIntent, REQUEST_CAMERA);//Open Camera
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(intent, REQUEST_CAMERA);//Open Camera
         });
     }
 
@@ -82,11 +81,9 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // you can view here which photo to send back, requestCode is self-defined above, resultCode is -1 is to take pictures, 0 is the user did not take pictures
-        Log.d(TAG, "onActivityResult: requestCode: " + requestCode + ", resultCode " + resultCode);
         //Photo Return
         if (requestCode == REQUEST_CAMERA && resultCode == -1) {
-            ImageView imageHigh = findViewById(R.id.imageViewHigh);
+            ImageView imageView = findViewById(R.id.imageView);
             new Thread(() -> {
                 // Get the photo file in BitmapFactory with the file URI path and process it as AtomicReference<Bitmap> to facilitate the subsequent rotation of the image.
                 AtomicReference<Bitmap> getImage = new AtomicReference<>(BitmapFactory.decodeFile(myPath));
@@ -102,7 +99,7 @@ public class CameraActivity extends AppCompatActivity {
                     Glide.with(this)
                             .load(getImage.get())
                             .centerCrop()
-                            .into(imageHigh);
+                            .into(imageView);
                 });
             }).start();
         }/***/
