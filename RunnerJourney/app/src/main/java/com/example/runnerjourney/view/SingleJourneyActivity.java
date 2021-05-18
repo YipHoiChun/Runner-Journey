@@ -51,14 +51,14 @@ public class SingleJourneyActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        imageView = findViewById(R.id.ViewSingleJourney_journeyImg);
-        distanceTextView = findViewById(R.id.Statistics_recordDistance);
-        avgSTextView = findViewById(R.id.Statistics_distanceToday);
-        timeTextView = findViewById(R.id.Statistics_timeToday);
-        dateTextView = findViewById(R.id.ViewSingleJourney_dateText);
-        ratingTextView = findViewById(R.id.ViewSingleJourney_ratingText);
-        commentTextView = findViewById(R.id.ViewSingleJourney_commentText);
-        titleTextView = findViewById(R.id.ViewSingleJourney_titleText);
+        imageView = findViewById(R.id.journeyImg);
+        distanceTextView = findViewById(R.id.recordDistance);
+        avgSTextView = findViewById(R.id.distanceToday);
+        timeTextView = findViewById(R.id.timeToday);
+        dateTextView = findViewById(R.id.dateText);
+        ratingTextView = findViewById(R.id.ratingText);
+        commentTextView = findViewById(R.id.commentText);
+        titleTextView = findViewById(R.id.titleText);
         journeyID = bundle.getLong("journeyID");
 
         populateView();

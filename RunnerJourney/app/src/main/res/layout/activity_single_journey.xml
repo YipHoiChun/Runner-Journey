@@ -43,7 +43,7 @@
 
 
         <TextView
-            android:id="@+id/ViewSingleJourney_titleText"
+            android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -51,7 +51,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageView
-            android:id="@+id/ViewSingleJourney_journeyImg"
+            android:id="@+id/journeyImg"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:srcCompat="@drawable/running" />
@@ -64,7 +64,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/Statistics_distanceToday"
+            android:id="@+id/distanceToday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/teal_700"
@@ -80,7 +80,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/ViewSingleJourney_ratingText"
+            android:id="@+id/ratingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/teal_700"
@@ -98,7 +98,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/ViewSingleJourney_dateText"
+            android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20/01/2020"
@@ -107,14 +107,14 @@
 
 
         <TextView
-            android:id="@+id/ViewSingleJourney_duration"
+            android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time"
             android:textColor="#000"
             android:textSize="20sp" />
         <TextView
-            android:id="@+id/Statistics_timeToday"
+            android:id="@+id/timeToday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00:00"
@@ -130,7 +130,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/Statistics_recordDistance"
+            android:id="@+id/recordDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00 KM"
@@ -138,7 +138,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/ViewSingleJourney_commentText"
+            android:id="@+id/commentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/a_comment"
